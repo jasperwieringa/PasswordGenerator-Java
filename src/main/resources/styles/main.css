@@ -1,55 +1,32 @@
-:root {
+.root {
+  /* Typography */
+  -font-size: 14;
+
   /* Main Colors */
-  --primary: #007bff;
-  --secondary: #6c757d;
-  --success: #28a745;
-  --danger: #dc3545;
-  --warning: #ffc107;
-  --info: #17a2b8;
-  --light: #f8f9fa;
-  --dark: #343a40;
-
-  /* Background colors */
-  --bg-primary: var(--primary);
-  --bg-secondary: var(--secondary);
-  --bg-success: var(--success);
-  --bg-danger: var(--danger);
-  --bg-warning: var(--warning);
-  --bg-info: var(--info);
-  --bg-light: var(--light);
-  --bg-dark: var(--dark);
-
-  /* Buttons */
-  --btn-primary: var(--primary);
-  --btn-secondary: var(--secondary);
-  --btn-success: var(--success);
-  --btn-danger: var(--danger);
-  --btn-warning: var(--warning);
-  --btn-info: var(--info);
-  --btn-light: var(--light);
-  --btn-dark: var(--dark);
+  -primary: #007bff;
+  -secondary: #6c757d;
+  -success: #28a745;
+  -danger: #dc3545;
+  -warning: #ffc107;
+  -info: #17a2b8;
+  -light: #f8f9fa;
+  -dark: #343a40;
+  -white: #fff;
 }
 
 #titlePane {
-  background-color: #343a40;
-  -fx-background-color: #343a40;
+  -fx-background-color: -dark;
+  -fx-text-fill: -white;
 }
 
 .button,
 .combo-box {
-  background-color: #f8f9fa;
-  font-size: 14;
-  color: var(--btn-primary);
-
-  -fx-background-color: #f8f9fa;
+  -fx-background-color: -white;
+  -fx-text-fill: -primary;
   -fx-font-size: 14;
-  -fx-text-fill: var(--btn-primary);
 }
 .button:hover,
 .combo-box:hover {
-  background-color: #f8f9fa;
-  cursor: pointer;
-
-  -fx-background-color: #f0f0f0;
+  -fx-background-color: -light;
   -fx-cursor: hand;
 }
