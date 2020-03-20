@@ -19,6 +19,7 @@
   -fx-text-fill: -white;
 }
 
+/* Set de styling voor de buttons */
 .button,
 .combo-box {
   -fx-background-color: -white;
@@ -29,4 +30,10 @@
 .combo-box:hover {
   -fx-background-color: -light;
   -fx-cursor: hand;
+}
+
+/* Set de label styling */
+#boxContent .label {
+  -fx-text-fill: -primary;
+  -fx-font-size: 14;
 }
