@@ -1,36 +1,42 @@
 package org.openjfx.passwordgenerator;
 
 import java.io.IOException;
-
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import java.util.Random;
 import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
 
-public class PassphraseController extends Controller {
-    ObservableList<String> passwordType = FXCollections.observableArrayList("Password");
+public class PassphraseController extends PasswordController {
+  protected String controllerName = "Passphrase";
 
-    @FXML
-    private ComboBox<String> passwordBox = new ComboBox<String>();
+  private int wordLength;
+  private String wordSeperator;
+  private Boolean capitalize;
+  private Boolean numberOn;
 
-    @FXML @Override 
-    protected void initialize() {
-      passwordBox.setValue("Passphrase");
-      passwordBox.setItems(passwordType);
+  private Random higherString = new Random();
+  private Random lowerString = new Random();
+  private Random number = new Random();
+
+  @FXML
+  @Override
+  protected void initialize() {
+    for (String type : passwordTypes.getTypes()) {
+      if (this.controllerName == type) {
+        passwordBox.setValue(type);
+        passwordTypes.getTypes().remove(type);
+        break;
+      }
     }
+    passwordBox.setItems(passwordTypes.getTypes());
+  }
 
-    @FXML @Override
-    protected void generatePassword() throws IOException {
-        // Do something here
-    }
+  @Override
+  protected String generatePassword() throws IOException {
+    return "I'm a passphrase";
+  }
 
-    @FXML @Override
-    protected void copyPassword() throws IOException {
-        // Do something here
-    }
-
-    @FXML @Override
-    protected void switchTo() throws IOException {
-      App.setRoot("password_generator");
-    }
+  @FXML
+  @Override
+  protected void switchTo() throws IOException {
+    App.setRoot("password_generator");
+  }
 }

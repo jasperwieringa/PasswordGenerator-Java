@@ -24,6 +24,8 @@ public class App extends Application {
         // Geef de titel van de window
         window.setTitle("Password Generator");
 
+        //
+
         // Maak een scene aan
         password_scene = new Scene(loadFXML("password_generator"));
 
