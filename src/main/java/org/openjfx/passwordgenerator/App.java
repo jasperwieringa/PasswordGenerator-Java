@@ -13,26 +13,27 @@ import java.io.IOException;
  */
 public class App extends Application {
 
-    private static Stage window;
-    private static Scene scene;
+    private static Scene password_scene;
 
     public static void main(String[] args) {
         launch();
     }
 
     @Override
-    public void start(Stage primaryStage) throws IOException {
-        window = primaryStage;
+    public void start(Stage window) throws IOException {
+        // Geef de titel van de window
         window.setTitle("Password Generator");
 
-        // Set the scene (Gebruik hiervoor de password_generator.fxml)
-        scene = new Scene(loadFXML("password_generator"));
-        window.setScene(scene);
+        // Maak een scene aan
+        password_scene = new Scene(loadFXML("password_generator"));
+
+        // Set de scene en laat deze zien
+        window.setScene(password_scene);
         window.show();
     }
 
     static void setRoot(String fxml) throws IOException {
-        scene.setRoot(loadFXML(fxml));
+        password_scene.setRoot(loadFXML(fxml));
     }
 
     // Zoek een fxml bestand op basis van een gegeven String

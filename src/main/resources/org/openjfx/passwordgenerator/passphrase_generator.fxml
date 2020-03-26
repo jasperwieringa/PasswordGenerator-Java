@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fillWidth="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="335.0" stylesheets="@../../../styles/main.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.passwordgenerator.PasswordController">
+<VBox fillWidth="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="335.0" stylesheets="@../../../styles/main.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.passwordgenerator.PassphraseController">
    <children>
       <Pane id="titlePane" prefHeight="125.0" prefWidth="335.0">
          <children>
@@ -29,7 +29,7 @@
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="624.0" prefWidth="320.0">
                <children>
-                  <Label alignment="CENTER" maxHeight="80.0" minHeight="80.0" prefHeight="80.0" prefWidth="320.0" text="Password" textAlignment="CENTER" AnchorPane.topAnchor="0.0">
+                  <Label alignment="CENTER" maxHeight="80.0" minHeight="80.0" prefHeight="80.0" prefWidth="320.0" text="Passphrase" textAlignment="CENTER" AnchorPane.topAnchor="0.0">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -42,7 +42,7 @@
                   </Pane>
                   <Pane layoutY="160.0" maxHeight="40.0" minHeight="40.0" prefHeight="40.0" prefWidth="320.0" AnchorPane.topAnchor="170.0">
                      <children>
-                        <ComboBox fx:id="passwordBox" onAction="#switchToPassphrase" prefHeight="40.0" prefWidth="320.0" />
+                        <ComboBox fx:id="passwordBox" onAction="#switchToPassword" prefHeight="40.0" prefWidth="320.0" />
                      </children>
                   </Pane>
                   <GridPane fx:id="boxContent" layoutY="210.0" maxHeight="200.0" minHeight="200.0" prefHeight="200.0" prefWidth="320.0" style="-fx-background-color: #fff;" AnchorPane.topAnchor="220.0">
