@@ -7,27 +7,31 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 
-public class PasswordController {
+public class PasswordController extends Controller {
     ObservableList<String> passwordType = FXCollections.observableArrayList("Passphrase");
 
     @FXML
     private ComboBox<String> passwordBox = new ComboBox<String>();
 
-    @FXML
-    private void initialize() {
-        passwordBox.setValue("Password");
-        passwordBox.setItems(passwordType);
+    @FXML @Override
+    protected void initialize() {
+      passwordBox.setValue("Password");
+      passwordBox.setItems(passwordType);
     }
 
-    // Button on click
-    @FXML
-    private void clickMe() throws IOException {
-        System.out.println("Hey you!");
-    };
-
-    // Dropdown on action
-    @FXML
-    private void switchToPassphrase() throws IOException {
-        App.setRoot("passphrase_generator");
+    @FXML @Override
+    protected void generatePassword() throws IOException {
+        // Do something here
     }
+
+    @FXML @Override
+    protected void copyPassword() throws IOException {
+        // Do something here
+    }
+
+    @FXML @Override
+    protected void switchTo() throws IOException {
+      App.setRoot("passphrase_generator");
+    }
+
 }
