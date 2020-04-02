@@ -35,6 +35,8 @@ public abstract class Controller {
   }
 
   // Abstracte methods
+  protected abstract void initialize() throws IOException;
+
   protected abstract void toggleType() throws IOException;
 
   protected abstract void switchTo() throws IOException;

@@ -7,7 +7,8 @@ public class PasswordController extends Controller {
   private String passwordType = "Password";
   
   @FXML
-  private void initialize() {
+  @Override
+  protected void initialize() throws IOException {
     for (String type : passwordTypes.getTypes()) {
       if (this.passwordType == type) {
         passwordBox.setValue(type);

@@ -13,7 +13,8 @@ public class PassphraseController extends Controller {
   @FXML SpinnerValueFactory.IntegerSpinnerValueFactory limietWaarden = (SpinnerValueFactory.IntegerSpinnerValueFactory) passLength.getValueFactory();
   
   @FXML
-  private void initialize() {
+  @Override
+  protected void initialize() throws IOException {
     for (String type : passwordTypes.getTypes()) {
       if (this.passwordType == type) {
         passwordBox.setValue(type);
