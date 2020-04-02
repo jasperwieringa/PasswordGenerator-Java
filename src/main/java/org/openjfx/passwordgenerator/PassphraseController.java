@@ -1,26 +1,15 @@
 package org.openjfx.passwordgenerator;
 
 import java.io.IOException;
-import java.util.Random;
 import javafx.fxml.FXML;
 
-public class PassphraseController extends PasswordController {
-  protected String controllerName = "Passphrase";
-
-  private int wordLength;
-  private String wordSeperator;
-  private Boolean capitalize;
-  private Boolean numberOn;
-
-  private Random higherString = new Random();
-  private Random lowerString = new Random();
-  private Random number = new Random();
+public class PassphraseController extends Controller {
+  private String passwordType = "Passphrase";
 
   @FXML
-  @Override
-  protected void initialize() {
+  private void initialize() {
     for (String type : passwordTypes.getTypes()) {
-      if (this.controllerName == type) {
+      if (this.passwordType == type) {
         passwordBox.setValue(type);
         passwordTypes.getTypes().remove(type);
         break;
@@ -29,9 +18,10 @@ public class PassphraseController extends PasswordController {
     passwordBox.setItems(passwordTypes.getTypes());
   }
 
+  @FXML
   @Override
-  protected String generatePassword() throws IOException {
-    return "I'm a passphrase";
+  protected void toggleType() throws IOException {
+    System.out.println("Hi");
   }
 
   @FXML

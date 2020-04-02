@@ -12,7 +12,6 @@ import java.io.IOException;
  * JavaFX App
  */
 public class App extends Application {
-
     private static Scene password_scene;
 
     public static void main(String[] args) {
@@ -23,8 +22,6 @@ public class App extends Application {
     public void start(Stage window) throws IOException {
         // Geef de titel van de window
         window.setTitle("Password Generator");
-
-        //
 
         // Maak een scene aan
         password_scene = new Scene(loadFXML("password_generator"));

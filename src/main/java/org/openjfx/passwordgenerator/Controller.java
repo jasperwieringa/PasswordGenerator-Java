@@ -1,15 +1,41 @@
 package org.openjfx.passwordgenerator;
 
 import java.io.IOException;
+import javafx.fxml.FXML;
+import javafx.collections.FXCollections;
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
+
+import javafx.scene.control.Label;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 
 public abstract class Controller {
-  protected abstract void initialize();
+  protected Clipboard clipboard = Clipboard.getSystemClipboard();
+  protected ClipboardContent content = new ClipboardContent();
 
-  protected abstract String generatePassword() throws IOException;
+  protected Password password = new Password("");
+  protected PasswordTypes passwordTypes = new PasswordTypes(FXCollections.observableArrayList("Password", "Passphrase"));
 
-  protected abstract void setPassword() throws IOException;
+  // @FXML fx:id's
+  @FXML protected Label passwordLabel;
+  @FXML protected Button generateButton;
+  @FXML protected Button copyButton;
+  @FXML protected ComboBox<String> passwordBox;
 
-  protected abstract void copyPassword() throws IOException;
+  @FXML
+  protected void generatePassword() throws IOException {
+    passwordLabel.setText(password.generatePassword(passwordBox.getValue()));
+  }
+
+  @FXML
+  protected void copyPassword() throws IOException {
+    content.putString(password.getPassword());
+    clipboard.setContent(content);
+  }
+
+  // Abstracte methods
+  protected abstract void toggleType() throws IOException;
 
   protected abstract void switchTo() throws IOException;
 }
