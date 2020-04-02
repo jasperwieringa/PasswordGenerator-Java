@@ -8,10 +8,11 @@ import javafx.scene.control.SpinnerValueFactory;
 public class PassphraseController extends Controller {
   private String passwordType = "Passphrase";
 
-  // Creer een spinner van het type Integer en zet de min/max/increase waarden
-  @FXML Spinner<Integer> passLength = new Spinner<>(3, 20, 0, 1); // Min 3, Max 20, in stappen van 1
-  @FXML SpinnerValueFactory.IntegerSpinnerValueFactory limietWaarden = (SpinnerValueFactory.IntegerSpinnerValueFactory) passLength.getValueFactory();
-  
+  @FXML
+  private Spinner<Integer> passLength = new Spinner<>(3, 20, 0, 1); // Min 3, Max 20, in stappen van 1
+  @FXML
+  private SpinnerValueFactory.IntegerSpinnerValueFactory limietWaarden = (SpinnerValueFactory.IntegerSpinnerValueFactory) passLength.getValueFactory();
+
   @FXML
   @Override
   protected void initialize() throws IOException {
@@ -26,14 +27,26 @@ public class PassphraseController extends Controller {
     // Set de waarden in de ComboBox
     passwordBox.setItems(passwordTypes.getTypes());
 
-    // Set de waarden in de Spinner
+    // Set de randvoorwaarden in de Spinner
     passLength.setValueFactory(limietWaarden);
+
+    // Voeg een listener toe om de waarde van de Spinner te gebruiken
+    passLength.valueProperty().addListener((observable, oldValue, newValue) -> {
+      setLength(newValue);
+    });
+
+  }
+
+  @FXML
+  @Override
+  protected void setLength(Number length) {
+    System.out.println(length);
   }
 
   @FXML
   @Override
   protected void toggleType() throws IOException {
-    System.out.println("Hi");
+    System.out.println("Setting type");
   }
 
   @FXML

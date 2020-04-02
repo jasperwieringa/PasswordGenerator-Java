@@ -15,13 +15,18 @@ public abstract class Controller {
   protected ClipboardContent content = new ClipboardContent();
 
   protected Password password = new Password("");
-  protected PasswordTypes passwordTypes = new PasswordTypes(FXCollections.observableArrayList("Password", "Passphrase"));
+  protected PasswordTypes passwordTypes = new PasswordTypes(
+      FXCollections.observableArrayList("Password", "Passphrase"));
 
   // @FXML fx:id's die in elke controller zit
-  @FXML protected Label passwordLabel;
-  @FXML protected Button generateButton;
-  @FXML protected Button copyButton;
-  @FXML protected ComboBox<String> passwordBox;
+  @FXML
+  protected Label passwordLabel;
+  @FXML
+  protected Button generateButton;
+  @FXML
+  protected Button copyButton;
+  @FXML
+  protected ComboBox<String> passwordBox;
 
   @FXML
   protected void generatePassword() throws IOException {
@@ -35,6 +40,8 @@ public abstract class Controller {
   }
 
   // Abstracte methods
+  protected abstract void setLength(Number length);
+
   protected abstract void initialize() throws IOException;
 
   protected abstract void toggleType() throws IOException;
