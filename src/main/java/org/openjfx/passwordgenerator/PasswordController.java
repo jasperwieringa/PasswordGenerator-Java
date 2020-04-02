@@ -15,6 +15,8 @@ public class PasswordController extends Controller {
         break;
       }
     }
+
+    // Set de waarden in de ComboBox
     passwordBox.setItems(passwordTypes.getTypes());
   }
 

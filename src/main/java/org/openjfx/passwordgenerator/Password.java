@@ -6,19 +6,19 @@ public class Password {
   private String password;
 
   // Password rules
-  private String wordSeperator;
   private int passLength;
-  private Boolean higherStringOn;
-  private Boolean lowerStringOn;
-  private Boolean numberOn;
+  private String wordSeperator;
+  private Boolean capitalOn;
+  private Boolean lowerOn;
+  private Boolean numbericOn;
   private Boolean specialOn;
-  private Boolean capitalize; 
+  private Boolean capitalizeOn;
 
-  private Random higherString = new Random();
+  private Random capitalString = new Random();
   private Random lowerString = new Random();
   private Random number = new Random();
   private Random special = new Random();
-    
+
   // New password
   protected Password(String password) {
     this.password = password;
@@ -30,11 +30,9 @@ public class Password {
 
     if (type == "Password" || type == "password") {
       value = "" + number.nextInt(6) + 1 + "";
-    }
-    else if (type == "Passphrase" || type == "passphrase") {
+    } else if (type == "Passphrase" || type == "passphrase") {
       value = "This is a passphrase";
-    }
-    else {
+    } else {
       value = "Completely random value";
     }
 

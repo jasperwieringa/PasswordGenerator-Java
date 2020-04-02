@@ -17,7 +17,7 @@ public abstract class Controller {
   protected Password password = new Password("");
   protected PasswordTypes passwordTypes = new PasswordTypes(FXCollections.observableArrayList("Password", "Passphrase"));
 
-  // @FXML fx:id's
+  // @FXML fx:id's die in elke controller zit
   @FXML protected Label passwordLabel;
   @FXML protected Button generateButton;
   @FXML protected Button copyButton;
