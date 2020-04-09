@@ -5,9 +5,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
+import javafx.scene.control.TextField;
+import javafx.scene.control.CheckBox;
 
 public class PassphraseController extends Controller {
   private String passwordType = "Passphrase";
@@ -20,7 +21,7 @@ public class PassphraseController extends Controller {
   private SpinnerValueFactory.IntegerSpinnerValueFactory limietWaarden = (SpinnerValueFactory.IntegerSpinnerValueFactory) passLength
       .getValueFactory();
   @FXML
-  private String wordSeperator;
+  private TextField wordSeperator;
   @FXML
   private CheckBox capital;
   @FXML
