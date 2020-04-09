@@ -9,7 +9,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 
 public class PasswordController extends Controller {
-  private int passwordLength = 5;
+  private int minLength = 5;
+  private int maxLength = 128;
+  private int passwordLength = minLength;
   private Hashtable<String, String> passwordRules = new Hashtable<String, String>();
 
   @FXML
@@ -49,8 +51,8 @@ public class PasswordController extends Controller {
     passwordBox.setItems(passwordTypes.getTypes());
 
     // Set de beginwaarde van de Slider
-    passLength.setMin(5);
-    passLength.setMax(128);
+    passLength.setMin(minLength);
+    passLength.setMax(maxLength);
     passLength.setValue(passwordLength);
     passLengthLabel.setText("" + passLength.valueProperty().getValue().intValue() + "");
 

@@ -10,7 +10,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.CheckBox;
 
 public class PassphraseController extends Controller {
-  private int passwordLength = 3;
+  private int minLength = 3;
+  private int passwordLength = minLength;
   private Hashtable<String, String> passwordRules = new Hashtable<String, String>();
 
   @FXML

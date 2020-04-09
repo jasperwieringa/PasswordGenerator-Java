@@ -8,14 +8,14 @@ import java.util.stream.Collectors;
 
 public class Password {
   private String password;
-  private int passwordLength;
 
+  // Wachtwoord libraries
   private static final String lowerString = "abcdefghijklmnopqrstuvwxyz";
   private static final String upperString = lowerString.toUpperCase();
   private static final String numberString = "0123456789";
   private static final String specialString = "!@#$%&*()_+-=[]?";
 
-  // Password rules
+  // Wachtwoord regels
   private Boolean upper;
   private Boolean lower;
   private Boolean numberic;
@@ -23,46 +23,59 @@ public class Password {
   private Boolean capitalize;
   private String seperator;
 
-  // New password
   protected Password(String password) {
     this.password = password;
   };
 
-  // Genereer een password
+  // Genereer een wachtwoord
   protected void generatePassword(int length, Hashtable<String, String> passwordRules) {
-    String passwordString = "";
-    String value = "";
+    String passwordLibrary = ""; // Lege library voor de beschikbare characters voor het wachtwoord
+    String requiredString = ""; // Lege library voor de vereiste characters voor het wachtwoord
+    String newPassword = "";
 
+    // Als het type wachtwoord een 'password' is
     if ((passwordRules.get("type").toLowerCase()).equals("password")) {
+      // Check alle wachtwoord regels
       this.upper = (passwordRules.get("upper")).equals("true");
       this.lower = (passwordRules.get("lower")).equals("true");
       this.numberic = (passwordRules.get("numberic")).equals("true");
       this.special = (passwordRules.get("special")).equals("true");
 
+      // Als hoofdletter vereist is
       if (this.upper) {
-        passwordString += upperString;
+        requiredString += generatePassword(1, upperString);
+        passwordLibrary += upperString;
       }
+      // Als kleine letter vereist is
       if (this.lower) {
-        passwordString += lowerString;
+        requiredString += generatePassword(1, lowerString);
+        passwordLibrary += lowerString;
       }
+      // Als een nummer vereist is
       if (this.numberic) {
-        passwordString += numberString;
+        requiredString += generatePassword(1, numberString);
+        passwordLibrary += numberString;
       }
+      // Als een speciaal teken vereist is
       if (this.special) {
-        passwordString += specialString;
+        requiredString += generatePassword(1, specialString);
+        passwordLibrary += specialString;
       }
 
-      String passwordStringShuffled = shufflePassword(passwordString);
-      String passwordAllowed = passwordStringShuffled;
+      // Genereer een random wachtwoord en geef de lengte van het benodigde wachtwoord
+      // mee (- de minimale vereiste characters) en de beschikbare characters
+      String generatedPassword = generatePassword(length - requiredString.length(), passwordLibrary);
 
-      value = generatePassword(length, passwordAllowed);
+      // Shuffle het wachtwoord om logica te vermijden
+      newPassword = shufflePassword(generatedPassword + requiredString);
     }
 
+    // Anders
     else {
-      value = "Passphrase generated";
+      newPassword = "Passphrase generated";
     }
 
-    this.password = value;
+    this.password = newPassword;
   };
 
   // Return password (voor de copyPassword function)
@@ -70,7 +83,7 @@ public class Password {
     return this.password;
   };
 
-  // Genereer een random password
+  // Genereer een wachtwoord o.b.v. alle voorwaarden binnen de passwordAllowed
   protected static String generatePassword(int length, String passwordAllowed) {
     if (length < 1)
       throw new IllegalArgumentException();
@@ -78,20 +91,20 @@ public class Password {
     StringBuilder stringBuilder = new StringBuilder(length);
     for (int i = 0; i < length; i++) {
 
-      int rndCharAt = (int) (Math.random() * passwordAllowed.length());
-      char rndChar = passwordAllowed.charAt(rndCharAt);
+      int randomCharAt = (int) (Math.random() * passwordAllowed.length());
+      char randomChar = passwordAllowed.charAt(randomCharAt);
 
-      stringBuilder.append(rndChar);
+      stringBuilder.append(randomChar);
 
     }
-
     return stringBuilder.toString();
-
   }
 
-  public static String shufflePassword(String string) {
-      List<String> letters = Arrays.asList(string.split(""));
-      Collections.shuffle(letters);
-      return letters.stream().collect(Collectors.joining());
+  // Shuffle het wachtwoord
+  protected static String shufflePassword(String wachtwoord) {
+    List<String> letters = Arrays.asList(wachtwoord.split(""));
+    Collections.shuffle(letters);
+
+    return letters.stream().collect(Collectors.joining());
   }
 }
