@@ -31,8 +31,8 @@ public abstract class Controller {
   protected ComboBox<String> passwordBox;
 
   // Genereer een wachtwoord a.h.v. de waarden vanuit de controller
-  protected void generatePassword(String passwordType, int passwordLength, Hashtable<String, String> passwordRules) throws IOException {
-    password.generatePassword(passwordType, passwordLength, passwordRules);
+  protected void generatePassword(int passwordLength, Hashtable<String, String> passwordRules) throws IOException {
+    password.generatePassword(passwordLength, passwordRules);
     passwordLabel.setText(password.getPassword());
   }
 

@@ -9,7 +9,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 
 public class PasswordController extends Controller {
-  private String passwordType = "Password";
   private int passwordLength = 5;
   private Hashtable<String, String> passwordRules = new Hashtable<String, String>();
 
@@ -29,13 +28,14 @@ public class PasswordController extends Controller {
   @FXML
   @Override
   protected void initialize() throws IOException {
+    passwordRules.put("type", "PaSSwOrD");
     passwordRules.put("upper", "true");
     passwordRules.put("lower", "true");
     passwordRules.put("numberic", "true");
     passwordRules.put("special", "true");
 
     for (String type : passwordTypes.getTypes()) {
-      if (passwordType == type) {
+      if ((passwordRules.get("type").toLowerCase()).equals(type.toLowerCase())) {
         passwordBox.setValue(type);
         passwordTypes.getTypes().remove(type);
         break;
@@ -91,7 +91,7 @@ public class PasswordController extends Controller {
   @FXML
   @Override
   protected void passwordSetter() throws IOException {
-    generatePassword(passwordType, passwordLength, passwordRules);
+    generatePassword(passwordLength, passwordRules);
   };
 
   @FXML

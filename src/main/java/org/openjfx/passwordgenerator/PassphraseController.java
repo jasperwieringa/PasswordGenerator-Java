@@ -10,7 +10,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.CheckBox;
 
 public class PassphraseController extends Controller {
-  private String passwordType = "Passphrase";
   private int passwordLength = 3;
   private Hashtable<String, String> passwordRules = new Hashtable<String, String>();
 
@@ -29,12 +28,13 @@ public class PassphraseController extends Controller {
   @FXML
   @Override
   protected void initialize() throws IOException {
+    passwordRules.put("type", "passphrase");
     passwordRules.put("seperator", " ");
     passwordRules.put("capital", "true");
     passwordRules.put("numberic", "true");
 
     for (String type : passwordTypes.getTypes()) {
-      if (passwordType == type) {
+      if ((passwordRules.get("type").toLowerCase()).equals(type.toLowerCase())) {
         passwordBox.setValue(type);
         passwordTypes.getTypes().remove(type);
         break;
@@ -75,7 +75,7 @@ public class PassphraseController extends Controller {
   @FXML
   @Override
   protected void passwordSetter() throws IOException {
-    generatePassword(passwordType, passwordLength, passwordRules);
+    generatePassword(passwordLength, passwordRules);
   };
 
   @FXML

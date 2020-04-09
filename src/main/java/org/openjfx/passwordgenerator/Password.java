@@ -29,11 +29,11 @@ public class Password {
   };
 
   // Genereer een password
-  protected void generatePassword(String type, int length, Hashtable<String, String> passwordRules) {
+  protected void generatePassword(int length, Hashtable<String, String> passwordRules) {
     String passwordString = "";
     String value = "";
 
-    if ((type.toLowerCase()).equals("password")) {
+    if ((passwordRules.get("type").toLowerCase()).equals("password")) {
       this.upper = (passwordRules.get("upper")).equals("true");
       this.lower = (passwordRules.get("lower")).equals("true");
       this.numberic = (passwordRules.get("numberic")).equals("true");
