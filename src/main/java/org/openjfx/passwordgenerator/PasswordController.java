@@ -11,7 +11,7 @@ import javafx.scene.control.Slider;
 
 public class PasswordController extends Controller {
   private String passwordType = "Password";
-  private String passwordLength;
+  private String passwordLength = "5";
   private ArrayList<Boolean> passwordRules = new ArrayList<Boolean>(Arrays.asList(true, true, true, true));
 
   @FXML
@@ -39,15 +39,21 @@ public class PasswordController extends Controller {
     }
 
     // Genereer een wachtwoord bij het initialiseren van de controller
-    generatePassword(passwordType, passwordLength, passwordRules);
+    passwordSetter();
 
     // Set de waarden in de ComboBox
     passwordBox.setItems(passwordTypes.getTypes());
 
     // Voeg een listener toe om de waarde van de Slider te gebruiken
     passLength.valueProperty().addListener((observable, oldValue, newValue) -> {
-      passwordLength = Integer.toString(newValue.intValue());
-      setLength();
+      passwordLength = Integer.toString(newValue.intValue());    
+      passLengthLabel.setText(passwordLength);
+
+      try {
+        passwordSetter();
+      } catch (IOException e) {
+        System.out.println(e);
+      }
     });
 
     // Voeg een listener toe om de waarde van de toggle (upper) te gebruiken
@@ -74,14 +80,7 @@ public class PasswordController extends Controller {
   @FXML
   @Override
   protected void passwordSetter() throws IOException {
-    generatePassword(passwordBox.getValue(), passwordLength, passwordRules);
-  }
-
-  @FXML
-  @Override
-  protected void setLength() {
-    passLengthLabel.setText(passwordLength);
-    System.out.println(passwordLength);
+    generatePassword(passwordType, passwordLength, passwordRules);
   }
 
   @FXML

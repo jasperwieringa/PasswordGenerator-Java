@@ -12,7 +12,7 @@ import javafx.scene.control.CheckBox;
 
 public class PassphraseController extends Controller {
   private String passwordType = "Passphrase";
-  private String passwordLength;
+  private String passwordLength = "3";
   private ArrayList<Boolean> passwordRules = new ArrayList<Boolean>(Arrays.asList(true, true));
 
   @FXML
@@ -39,7 +39,7 @@ public class PassphraseController extends Controller {
     }
 
     // Genereer een wachtwoord bij het initialiseren van de controller
-    generatePassword(passwordType, passwordLength, passwordRules);
+    passwordSetter();
 
     // Set de waarden in de ComboBox
     passwordBox.setItems(passwordTypes.getTypes());
@@ -50,7 +50,6 @@ public class PassphraseController extends Controller {
     // Voeg een listener toe om de waarde van de Spinner te gebruiken
     passLength.valueProperty().addListener((observable, oldValue, newValue) -> {
       passwordLength = Integer.toString(newValue.intValue());
-      setLength();
     });
 
     // Voeg een listener toe om de waarde van de toggle (capital) te gebruiken
@@ -67,13 +66,7 @@ public class PassphraseController extends Controller {
   @FXML
   @Override
   protected void passwordSetter() throws IOException {
-    generatePassword(passwordBox.getValue(), passwordLength, passwordRules);
-  }
-
-  @FXML
-  @Override
-  protected void setLength() {
-    System.out.println(passwordLength);
+    generatePassword(passwordType, passwordLength, passwordRules);
   }
 
   @FXML

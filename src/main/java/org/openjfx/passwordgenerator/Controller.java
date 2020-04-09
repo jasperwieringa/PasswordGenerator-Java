@@ -51,10 +51,8 @@ public abstract class Controller {
 
   // Abstracte methoden
   protected abstract void initialize() throws IOException;
-
+  
   protected abstract void passwordSetter() throws IOException;
-
-  protected abstract void setLength();
 
   protected abstract void switchTo() throws IOException;
 }
