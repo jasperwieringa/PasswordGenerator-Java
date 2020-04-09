@@ -2,6 +2,7 @@ package org.openjfx.passwordgenerator;
 
 import java.io.IOException;
 import javafx.fxml.FXML;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 
@@ -11,7 +12,12 @@ public class PassphraseController extends Controller {
   @FXML
   private Spinner<Integer> passLength = new Spinner<>(3, 20, 0, 1); // Min 3, Max 20, in stappen van 1
   @FXML
-  private SpinnerValueFactory.IntegerSpinnerValueFactory limietWaarden = (SpinnerValueFactory.IntegerSpinnerValueFactory) passLength.getValueFactory();
+  private SpinnerValueFactory.IntegerSpinnerValueFactory limietWaarden = (SpinnerValueFactory.IntegerSpinnerValueFactory) passLength
+      .getValueFactory();
+  @FXML
+  private CheckBox capital;
+  @FXML
+  private CheckBox numberic;
 
   @FXML
   @Override
@@ -35,18 +41,21 @@ public class PassphraseController extends Controller {
       setLength(newValue);
     });
 
+    // Voeg een listener toe om de waarde van de toggle (special) te gebruiken
+    capital.selectedProperty().addListener(((observable, oldValue, newValue) -> {
+      toggleType(oldValue, newValue);
+    }));
+
+    // Voeg een listener toe om de waarde van de toggle (numberic) te gebruiken
+    numberic.selectedProperty().addListener(((observable, oldValue, newValue) -> {
+      toggleType(oldValue, newValue);
+    }));
   }
 
   @FXML
   @Override
   protected void setLength(Number length) {
     System.out.println(length);
-  }
-
-  @FXML
-  @Override
-  protected void toggleType() throws IOException {
-    System.out.println("Setting type");
   }
 
   @FXML

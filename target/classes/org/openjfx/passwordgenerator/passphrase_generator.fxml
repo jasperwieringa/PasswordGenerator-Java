@@ -61,7 +61,7 @@
                         <AnchorPane maxHeight="40.0" minHeight="40.0" prefHeight="40.0" prefWidth="200.0" styleClass="button">
                            <children>
                               <Label prefHeight="40.0" prefWidth="130.0" text="Number of Words" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="181.0" AnchorPane.topAnchor="0.0" />
-                              <Spinner fx:id="passLength" editable="true" layoutX="235.3" layoutY="8.7" maxHeight="40.0" minHeight="31.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="31.0" prefWidth="77.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="0.0">
+                              <Spinner fx:id="passLength" layoutX="235.3" layoutY="8.7" maxHeight="40.0" minHeight="31.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="31.0" prefWidth="77.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="0.0">
                                  <opaqueInsets>
                                     <Insets />
                                  </opaqueInsets></Spinner>

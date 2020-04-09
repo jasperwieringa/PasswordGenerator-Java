@@ -39,12 +39,15 @@ public abstract class Controller {
     clipboard.setContent(content);
   }
 
-  // Abstracte methods
-  protected abstract void setLength(Number length);
+  @FXML
+  protected void toggleType(Boolean oldValue, Boolean newValue) {
+    System.out.println("changed from " + oldValue + " to " + newValue);
+  }
 
+  // Abstracte methods
   protected abstract void initialize() throws IOException;
 
-  protected abstract void toggleType() throws IOException;
+  protected abstract void setLength(Number length);
 
   protected abstract void switchTo() throws IOException;
 }
