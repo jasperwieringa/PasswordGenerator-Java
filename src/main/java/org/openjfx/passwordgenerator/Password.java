@@ -1,24 +1,27 @@
 package org.openjfx.passwordgenerator;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Hashtable;
-import java.util.Random;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class Password {
   private String password;
   private int passwordLength;
 
-  private static final String upper_string = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-  private static final String lower_string = "abcdefghijklmnopqrstuvwxyz";
+  private static final String lowerString = "abcdefghijklmnopqrstuvwxyz";
+  private static final String upperString = lowerString.toUpperCase();
+  private static final String numberString = "0123456789";
+  private static final String specialString = "!@#$%&*()_+-=[]?";
 
   // Password rules
-  private String seperator;
   private Boolean upper;
   private Boolean lower;
   private Boolean numberic;
   private Boolean special;
   private Boolean capitalize;
-
-  private Random number = new Random();
+  private String seperator;
 
   // New password
   protected Password(String password) {
@@ -27,19 +30,36 @@ public class Password {
 
   // Genereer een password
   protected void generatePassword(String type, int length, Hashtable<String, String> passwordRules) {
-    String value;
-    this.passwordLength = length;
+    String passwordString = "";
+    String value = "";
 
-    if (type == "Password" || type == "password") {
-      // this.upper = passwordRules.get("upper");
-      // this.lower = passwordRules.get("lower");
-      // this.numberic = passwordRules.get("numberic");
-      // this.special = passwordRules.get("special");
-      
-      value = "" + number.nextInt(10) + "";
-      
-    } else {
-      value = "This is a passphrase " + "" + number.nextInt(10) + "";
+    if ((type.toLowerCase()).equals("password")) {
+      this.upper = (passwordRules.get("upper")).equals("true");
+      this.lower = (passwordRules.get("lower")).equals("true");
+      this.numberic = (passwordRules.get("numberic")).equals("true");
+      this.special = (passwordRules.get("special")).equals("true");
+
+      if (this.upper) {
+        passwordString += upperString;
+      }
+      if (this.lower) {
+        passwordString += lowerString;
+      }
+      if (this.numberic) {
+        passwordString += numberString;
+      }
+      if (this.special) {
+        passwordString += specialString;
+      }
+
+      String passwordStringShuffled = shufflePassword(passwordString);
+      String passwordAllowed = passwordStringShuffled;
+
+      value = generatePassword(length, passwordAllowed);
+    }
+
+    else {
+      value = "Passphrase generated";
     }
 
     this.password = value;
@@ -50,25 +70,28 @@ public class Password {
     return this.password;
   };
 
-  // Genereer een random reeks aan hoofdletters
-  protected static String upperString(int count) {
-    StringBuilder builder = new StringBuilder();
+  // Genereer een random password
+  protected static String generatePassword(int length, String passwordAllowed) {
+    if (length < 1)
+      throw new IllegalArgumentException();
 
-    while (count-- != 0) {
-      int character = (int) (Math.random() * upper_string.length());
-      builder.append(upper_string.charAt(character));
+    StringBuilder stringBuilder = new StringBuilder(length);
+    for (int i = 0; i < length; i++) {
+
+      int rndCharAt = (int) (Math.random() * passwordAllowed.length());
+      char rndChar = passwordAllowed.charAt(rndCharAt);
+
+      stringBuilder.append(rndChar);
+
     }
-    return builder.toString();
-  };
 
-  // Genereer een random reeks aan kleine letters
-  protected static String lowerString(int count) {
-    StringBuilder builder = new StringBuilder();
+    return stringBuilder.toString();
 
-    while (count-- != 0) {
-      int character = (int) (Math.random() * upper_string.length());
-      builder.append(upper_string.charAt(character));
-    }
-    return builder.toString();
-  };
+  }
+
+  public static String shufflePassword(String string) {
+      List<String> letters = Arrays.asList(string.split(""));
+      Collections.shuffle(letters);
+      return letters.stream().collect(Collectors.joining());
+  }
 }

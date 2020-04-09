@@ -21,7 +21,6 @@ public abstract class Controller {
   protected PasswordTypes passwordTypes = new PasswordTypes(
       FXCollections.observableArrayList("Password", "Passphrase"));
 
-  // @FXML
   @FXML
   protected Label passwordLabel;
   @FXML

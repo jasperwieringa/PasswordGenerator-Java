@@ -51,7 +51,7 @@ public class PasswordController extends Controller {
     // Set de beginwaarde van de Slider
     passLength.setMin(5);
     passLength.setMax(128);
-    passLength.setValue(5);
+    passLength.setValue(passwordLength);
     passLengthLabel.setText("" + passLength.valueProperty().getValue().intValue() + "");
 
     // Voeg een listener toe om de waarde van de Slider te gebruiken
