@@ -1,44 +1,67 @@
 package org.openjfx.passwordgenerator;
 
-import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.Random;
 
 public class Password {
   private String password;
 
+  private static final String upper_string = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  private static final String lower_string = "abcdefghijklmnopqrstuvwxyz";
+
   // Password rules
-  private int passLength;
-  private String wordSeperator;
-  private Boolean upperOn;
-  private Boolean lowerOn;
-  private Boolean numbericOn;
-  private Boolean specialOn;
-  private Boolean capitalizeOn;
+  private int pass_length;
+  private String seperator;
+  private Boolean upper;
+  private Boolean lower;
+  private Boolean numberic;
+  private Boolean special;
+  private Boolean capitalize;
 
   private Random number = new Random();
 
   // New password
   protected Password(String password) {
     this.password = password;
-  }
+  };
 
   // Genereer een password
-  protected void generatePassword(String type, String length, ArrayList<Boolean> rules) {
+  protected void generatePassword(String type, Hashtable<String, String> passwordRules) {
     String value;
 
     if (type == "Password" || type == "password") {
       value = "" + number.nextInt(10) + "";
-    } else if (type == "Passphrase" || type == "passphrase") {
-      value = "This is a passphrase";
     } else {
-      value = "Completely random value";
+      value = "This is a passphrase " + "" + number.nextInt(10) + "";
     }
 
     this.password = value;
-  }
+  };
 
   // Return password (voor de copyPassword function)
   protected String getPassword() {
     return this.password;
+  };
+
+  // Genereer een random reeks aan hoofdletters
+  protected static String upperString(int count) {
+    StringBuilder builder = new StringBuilder();
+
+    while (count-- != 0) {
+      int character = (int) (Math.random() * upper_string.length());
+      builder.append(upper_string.charAt(character));
+    }
+    return builder.toString();
+  };
+
+  // Genereer een random reeks aan kleine letters
+  protected static String lowerString(int count) {
+    StringBuilder builder = new StringBuilder();
+
+    while (count-- != 0) {
+      int character = (int) (Math.random() * upper_string.length());
+      builder.append(upper_string.charAt(character));
+    }
+    return builder.toString();
   };
 }

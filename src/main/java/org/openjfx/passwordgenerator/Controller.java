@@ -1,7 +1,8 @@
 package org.openjfx.passwordgenerator;
 
 import java.io.IOException;
-import java.util.ArrayList;
+
+import java.util.Hashtable;
 
 import javafx.fxml.FXML;
 import javafx.collections.FXCollections;
@@ -31,8 +32,8 @@ public abstract class Controller {
   protected ComboBox<String> passwordBox;
 
   // Genereer een wachtwoord a.h.v. de waarden vanuit de controller
-  protected void generatePassword(String passwordType, String passwordLength, ArrayList<Boolean> passwordRules) throws IOException {
-    password.generatePassword(passwordType, passwordLength, passwordRules);
+  protected void generatePassword(String type, Hashtable<String, String> passwordRules) throws IOException {
+    password.generatePassword(type, passwordRules);
     passwordLabel.setText(password.getPassword());
   }
 

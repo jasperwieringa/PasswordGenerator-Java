@@ -1,8 +1,7 @@
 package org.openjfx.passwordgenerator;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Hashtable;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Spinner;
@@ -12,8 +11,7 @@ import javafx.scene.control.CheckBox;
 
 public class PassphraseController extends Controller {
   private String passwordType = "Passphrase";
-  private String passwordLength = "3";
-  private ArrayList<Boolean> passwordRules = new ArrayList<Boolean>(Arrays.asList(true, true));
+  private Hashtable<String, String> passwordRules = new Hashtable<String, String>();
 
   @FXML
   private Spinner<Integer> passLength = new Spinner<>(3, 20, 0, 1); // Min 3, Max 20, in stappen van 1
@@ -30,8 +28,13 @@ public class PassphraseController extends Controller {
   @FXML
   @Override
   protected void initialize() throws IOException {
+    passwordRules.put("length", "3");
+    passwordRules.put("seperator", " ");
+    passwordRules.put("capital", "true");
+    passwordRules.put("numberic", "true");
+
     for (String type : passwordTypes.getTypes()) {
-      if (this.passwordType == type) {
+      if (passwordType == type) {
         passwordBox.setValue(type);
         passwordTypes.getTypes().remove(type);
         break;
@@ -49,7 +52,13 @@ public class PassphraseController extends Controller {
 
     // Voeg een listener toe om de waarde van de Spinner te gebruiken
     passLength.valueProperty().addListener((observable, oldValue, newValue) -> {
-      passwordLength = Integer.toString(newValue.intValue());
+      passwordRules.replace("length", Integer.toString(newValue.intValue()));
+
+      try {
+        passwordSetter();
+      } catch (IOException e) {
+        System.out.println(e);
+      }
     });
 
     // Voeg een listener toe om de waarde van de toggle (capital) te gebruiken
@@ -61,17 +70,17 @@ public class PassphraseController extends Controller {
     numberic.selectedProperty().addListener(((observable, oldValue, newValue) -> {
       toggleType(oldValue, newValue);
     }));
-  }
+  };
 
   @FXML
   @Override
   protected void passwordSetter() throws IOException {
-    generatePassword(passwordType, passwordLength, passwordRules);
-  }
+    generatePassword(passwordType, passwordRules);
+  };
 
   @FXML
   @Override
   protected void switchTo() throws IOException {
     App.setRoot("password_generator");
-  }
+  };
 }
