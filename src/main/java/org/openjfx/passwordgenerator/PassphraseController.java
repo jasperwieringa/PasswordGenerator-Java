@@ -11,6 +11,7 @@ import javafx.scene.control.CheckBox;
 
 public class PassphraseController extends Controller {
   private String passwordType = "Passphrase";
+  private int passwordLength = 3;
   private Hashtable<String, String> passwordRules = new Hashtable<String, String>();
 
   @FXML
@@ -28,7 +29,6 @@ public class PassphraseController extends Controller {
   @FXML
   @Override
   protected void initialize() throws IOException {
-    passwordRules.put("length", "3");
     passwordRules.put("seperator", " ");
     passwordRules.put("capital", "true");
     passwordRules.put("numberic", "true");
@@ -52,7 +52,7 @@ public class PassphraseController extends Controller {
 
     // Voeg een listener toe om de waarde van de Spinner te gebruiken
     passLength.valueProperty().addListener((observable, oldValue, newValue) -> {
-      passwordRules.replace("length", Integer.toString(newValue.intValue()));
+      passwordLength = newValue.intValue();
 
       try {
         passwordSetter();
@@ -75,7 +75,7 @@ public class PassphraseController extends Controller {
   @FXML
   @Override
   protected void passwordSetter() throws IOException {
-    generatePassword(passwordType, passwordRules);
+    generatePassword(passwordType, passwordLength, passwordRules);
   };
 
   @FXML

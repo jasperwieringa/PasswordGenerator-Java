@@ -5,12 +5,12 @@ import java.util.Random;
 
 public class Password {
   private String password;
+  private int passwordLength;
 
   private static final String upper_string = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
   private static final String lower_string = "abcdefghijklmnopqrstuvwxyz";
 
   // Password rules
-  private int pass_length;
   private String seperator;
   private Boolean upper;
   private Boolean lower;
@@ -26,11 +26,18 @@ public class Password {
   };
 
   // Genereer een password
-  protected void generatePassword(String type, Hashtable<String, String> passwordRules) {
+  protected void generatePassword(String type, int length, Hashtable<String, String> passwordRules) {
     String value;
+    this.passwordLength = length;
 
     if (type == "Password" || type == "password") {
+      // this.upper = passwordRules.get("upper");
+      // this.lower = passwordRules.get("lower");
+      // this.numberic = passwordRules.get("numberic");
+      // this.special = passwordRules.get("special");
+      
       value = "" + number.nextInt(10) + "";
+      
     } else {
       value = "This is a passphrase " + "" + number.nextInt(10) + "";
     }
