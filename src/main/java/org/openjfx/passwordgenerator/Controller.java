@@ -1,6 +1,8 @@
 package org.openjfx.passwordgenerator;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javafx.fxml.FXML;
 import javafx.collections.FXCollections;
 import javafx.scene.input.Clipboard;
@@ -33,18 +35,17 @@ public abstract class Controller {
     passwordLabel.setText(password.getPassword());
   }
 
-  // Genereer een wachtwoord a.h.v. het object password en parse het type vanuit de passwordbox
-  @FXML
-  protected void generatePassword() throws IOException {
-    password.generatePassword(passwordBox.getValue());
-    setPassword();
-  }
-
-  // Kopieer het wachtwoord a.h.v. het object password en zet de waarde in de clipboard
+  // Kopieer het wachtwoord uit de passwordLabel
   @FXML
   protected void copyPassword() throws IOException {
-    content.putString(password.getPassword());
+    content.putString(passwordLabel.getText());
     clipboard.setContent(content);
+  }
+
+  // Genereer een wachtwoord a.h.v. de waarden vanuit de controller
+  protected void generatePassword(String type, String length, ArrayList<Boolean> passwordRules) throws IOException {
+    password.generatePassword(type, length, passwordRules);
+    setPassword();
   }
 
   // Toggle de aan/uit van een checkbox
@@ -56,7 +57,9 @@ public abstract class Controller {
   // Abstracte methoden
   protected abstract void initialize() throws IOException;
 
-  protected abstract void setLength(Number length);
+  protected abstract void passwordSetter() throws IOException;
+
+  protected abstract void setLength();
 
   protected abstract void switchTo() throws IOException;
 }

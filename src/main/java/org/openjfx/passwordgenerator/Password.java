@@ -1,5 +1,6 @@
 package org.openjfx.passwordgenerator;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Password {
@@ -8,16 +9,13 @@ public class Password {
   // Password rules
   private int passLength;
   private String wordSeperator;
-  private Boolean capitalOn;
+  private Boolean upperOn;
   private Boolean lowerOn;
   private Boolean numbericOn;
   private Boolean specialOn;
   private Boolean capitalizeOn;
 
-  private Random capitalString = new Random();
-  private Random lowerString = new Random();
   private Random number = new Random();
-  private Random special = new Random();
 
   // New password
   protected Password(String password) {
@@ -25,7 +23,7 @@ public class Password {
   }
 
   // Genereer een password
-  protected void generatePassword(String type) {
+  protected void generatePassword(String type, String length, ArrayList<Boolean> passwordRules) {
     String value;
 
     if (type == "Password" || type == "password") {
