@@ -18,7 +18,7 @@ public abstract class Controller {
   protected PasswordTypes passwordTypes = new PasswordTypes(
       FXCollections.observableArrayList("Password", "Passphrase"));
 
-  // @FXML fx:id's die in elke controller zit
+  // @FXML
   @FXML
   protected Label passwordLabel;
   @FXML
@@ -28,23 +28,32 @@ public abstract class Controller {
   @FXML
   protected ComboBox<String> passwordBox;
 
-  @FXML
-  protected void generatePassword() throws IOException {
-    passwordLabel.setText(password.generatePassword(passwordBox.getValue()));
+  // Zet wachtwoord in de passwordLabel
+  protected void setPassword() throws IOException {
+    passwordLabel.setText(password.getPassword());
   }
 
+  // Genereer een wachtwoord a.h.v. het object password en parse het type vanuit de passwordbox
+  @FXML
+  protected void generatePassword() throws IOException {
+    password.generatePassword(passwordBox.getValue());
+    setPassword();
+  }
+
+  // Kopieer het wachtwoord a.h.v. het object password en zet de waarde in de clipboard
   @FXML
   protected void copyPassword() throws IOException {
     content.putString(password.getPassword());
     clipboard.setContent(content);
   }
 
+  // Toggle de aan/uit van een checkbox
   @FXML
   protected void toggleType(Boolean oldValue, Boolean newValue) {
     System.out.println("changed from " + oldValue + " to " + newValue);
   }
 
-  // Abstracte methods
+  // Abstracte methoden
   protected abstract void initialize() throws IOException;
 
   protected abstract void setLength(Number length);

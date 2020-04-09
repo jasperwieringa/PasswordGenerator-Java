@@ -25,18 +25,18 @@ public class Password {
   }
 
   // Genereer een password
-  protected String generatePassword(String type) {
+  protected void generatePassword(String type) {
     String value;
 
     if (type == "Password" || type == "password") {
-      value = "" + number.nextInt(6) + 1 + "";
+      value = "" + number.nextInt(10) + "";
     } else if (type == "Passphrase" || type == "passphrase") {
       value = "This is a passphrase";
     } else {
       value = "Completely random value";
     }
 
-    return value;
+    this.password = value;
   }
 
   // Return password (voor de copyPassword function)
