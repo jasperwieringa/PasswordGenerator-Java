@@ -30,8 +30,9 @@ public abstract class Controller {
   @FXML
   protected ComboBox<String> passwordBox;
 
-  // Zet wachtwoord in de passwordLabel
-  protected void setPassword() throws IOException {
+  // Genereer een wachtwoord a.h.v. de waarden vanuit de controller
+  protected void generatePassword(String passwordType, String passwordLength, ArrayList<Boolean> passwordRules) throws IOException {
+    password.generatePassword(passwordType, passwordLength, passwordRules);
     passwordLabel.setText(password.getPassword());
   }
 
@@ -40,12 +41,6 @@ public abstract class Controller {
   protected void copyPassword() throws IOException {
     content.putString(passwordLabel.getText());
     clipboard.setContent(content);
-  }
-
-  // Genereer een wachtwoord a.h.v. de waarden vanuit de controller
-  protected void generatePassword(String type, String length, ArrayList<Boolean> passwordRules) throws IOException {
-    password.generatePassword(type, length, passwordRules);
-    setPassword();
   }
 
   // Toggle de aan/uit van een checkbox

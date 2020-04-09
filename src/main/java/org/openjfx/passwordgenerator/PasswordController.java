@@ -38,6 +38,9 @@ public class PasswordController extends Controller {
       }
     }
 
+    // Genereer een wachtwoord bij het initialiseren van de controller
+    generatePassword(passwordType, passwordLength, passwordRules);
+
     // Set de waarden in de ComboBox
     passwordBox.setItems(passwordTypes.getTypes());
 

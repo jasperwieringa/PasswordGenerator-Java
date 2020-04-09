@@ -23,7 +23,7 @@ public class Password {
   }
 
   // Genereer een password
-  protected void generatePassword(String type, String length, ArrayList<Boolean> passwordRules) {
+  protected void generatePassword(String type, String length, ArrayList<Boolean> rules) {
     String value;
 
     if (type == "Password" || type == "password") {

@@ -12,8 +12,8 @@ import javafx.scene.control.CheckBox;
 
 public class PassphraseController extends Controller {
   private String passwordType = "Passphrase";
-  private String passphraseLength;
-  private ArrayList<Boolean> passphraseRules = new ArrayList<Boolean>(Arrays.asList(true, true));
+  private String passwordLength;
+  private ArrayList<Boolean> passwordRules = new ArrayList<Boolean>(Arrays.asList(true, true));
 
   @FXML
   private Spinner<Integer> passLength = new Spinner<>(3, 20, 0, 1); // Min 3, Max 20, in stappen van 1
@@ -38,6 +38,9 @@ public class PassphraseController extends Controller {
       }
     }
 
+    // Genereer een wachtwoord bij het initialiseren van de controller
+    generatePassword(passwordType, passwordLength, passwordRules);
+
     // Set de waarden in de ComboBox
     passwordBox.setItems(passwordTypes.getTypes());
 
@@ -46,7 +49,7 @@ public class PassphraseController extends Controller {
 
     // Voeg een listener toe om de waarde van de Spinner te gebruiken
     passLength.valueProperty().addListener((observable, oldValue, newValue) -> {
-      passphraseLength = Integer.toString(newValue.intValue());
+      passwordLength = Integer.toString(newValue.intValue());
       setLength();
     });
 
@@ -64,13 +67,13 @@ public class PassphraseController extends Controller {
   @FXML
   @Override
   protected void passwordSetter() throws IOException {
-    generatePassword(passwordBox.getValue(), passphraseLength, passphraseRules);
+    generatePassword(passwordBox.getValue(), passwordLength, passwordRules);
   }
 
   @FXML
   @Override
   protected void setLength() {
-    System.out.println(passphraseLength);
+    System.out.println(passwordLength);
   }
 
   @FXML
