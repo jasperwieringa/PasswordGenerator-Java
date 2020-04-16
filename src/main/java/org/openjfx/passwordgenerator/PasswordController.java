@@ -100,6 +100,12 @@ public class PasswordController extends Controller {
     }
   }
 
+  @FXML
+  @Override
+  protected void switchTo() throws IOException {
+    App.setRoot("passphrase_generator");
+  }
+
   // Controleer of de gebruiker de checkbox uit mag zetten
   private Boolean changeAllowed() {
     Boolean can_change = false;
@@ -123,10 +129,4 @@ public class PasswordController extends Controller {
 
     return can_change;
   }
-
-  @FXML
-  @Override
-  protected void switchTo() throws IOException {
-    App.setRoot("passphrase_generator");
-  };
 }

@@ -81,5 +81,5 @@ public class PassphraseController extends Controller {
   @Override
   protected void switchTo() throws IOException {
     App.setRoot("password_generator");
-  };
+  }
 }
