@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Hashtable;
 import java.util.Set;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
@@ -71,29 +72,42 @@ public class PasswordController extends Controller {
 
     // Voeg een listener toe om de waarde van de toggle (upper) te gebruiken
     upper.selectedProperty().addListener(((observable, oldValue, newValue) -> {
+      setRules("upper", "" + newValue + "");
       if (changeAllowed(passwordRules)) {
-        setRules("upper", "" + newValue + "");
+        upper.setSelected(newValue);
+      } else {
+        upper.setSelected(true);
       }
     }));
 
     // Voeg een listener toe om de waarde van de toggle (lower) te gebruiken
     lower.selectedProperty().addListener(((observable, oldValue, newValue) -> {
+      setRules("lower", "" + newValue + "");
       if (changeAllowed(passwordRules)) {
-        setRules("lower", "" + newValue + "");
+        lower.setSelected(newValue);
+      } else {
+        lower.setSelected(true);
       }
+
     }));
 
     // Voeg een listener toe om de waarde van de toggle (numberic) te gebruiken
     numberic.selectedProperty().addListener(((observable, oldValue, newValue) -> {
+      setRules("numberic", "" + newValue + "");
       if (changeAllowed(passwordRules)) {
-        setRules("numberic", "" + newValue + "");
+        numberic.setSelected(newValue);
+      } else {
+        numberic.setSelected(true);
       }
     }));
 
     // Voeg een listener toe om de waarde van de toggle (special) te gebruiken
     special.selectedProperty().addListener(((observable, oldValue, newValue) -> {
+      setRules("special", "" + newValue + "");
       if (changeAllowed(passwordRules)) {
-        setRules("special", "" + newValue + "");
+        special.setSelected(newValue);
+      } else {
+        special.setSelected(true);
       }
     }));
   };

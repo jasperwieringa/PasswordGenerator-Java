@@ -7,6 +7,7 @@ import java.util.Set;
 
 import javafx.fxml.FXML;
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 
@@ -51,11 +52,17 @@ public abstract class Controller {
     if (passwordRules.size() > 0) {
       Set<String> rules = passwordRules.keySet();
 
+      int min_selected = 1;
+
       for (String rule : rules) {
-        if (passwordRules.get(rule) == "true") {
-          can_change = true;
-          break;
+        if (passwordRules.get(rule).equals("true")) {
+          min_selected += 1;
         }
+      }
+
+      // Wanneer er op z'n minst 2 checkboxen aan staan
+      if (min_selected > 1) {
+        can_change = true;
       }
     }
 
