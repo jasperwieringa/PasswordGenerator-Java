@@ -7,6 +7,7 @@ import java.util.Set;
 
 import javafx.fxml.FXML;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
@@ -16,12 +17,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 
 public abstract class Controller {
-  protected Clipboard clipboard = Clipboard.getSystemClipboard();
-  protected ClipboardContent content = new ClipboardContent();
-
-  protected Password password = new Password("");
-  protected PasswordTypes passwordTypes = new PasswordTypes(
-      FXCollections.observableArrayList("Password", "Passphrase"));
+  private Clipboard clipboard = Clipboard.getSystemClipboard();
+  private ClipboardContent content = new ClipboardContent();
+  private Password password = new Password("");
+  protected ObservableList<String> passwordTypes = FXCollections.observableArrayList("Password", "Passphrase");
 
   @FXML
   protected Label passwordLabel;
@@ -37,6 +36,7 @@ public abstract class Controller {
     password.generatePassword(passwordLength, passwordRules);
     passwordLabel.setText(password.getPassword());
   }
+
 
   // Kopieer het wachtwoord uit de passwordLabel
   @FXML

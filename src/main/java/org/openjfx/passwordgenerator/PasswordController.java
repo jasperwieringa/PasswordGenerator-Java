@@ -32,15 +32,15 @@ public class PasswordController extends Controller {
   @Override
   protected void initialize() throws IOException {
     passwordRules.put("type", "password");
-    passwordRules.put("upper", "true");
-    passwordRules.put("lower", "true");
-    passwordRules.put("numberic", "true");
-    passwordRules.put("special", "true");
+    passwordRules.put("upper", "" + upper.isSelected() + "");
+    passwordRules.put("lower", "" + lower.isSelected() + "");
+    passwordRules.put("numberic", "" + numberic.isSelected() + "");
+    passwordRules.put("special", "" + special.isSelected() + "");
 
-    for (String type : passwordTypes.getTypes()) {
+    for (String type : passwordTypes) {
       if ((passwordRules.get("type").toLowerCase()).equals(type.toLowerCase())) {
         passwordBox.setValue(type);
-        passwordTypes.getTypes().remove(type);
+        passwordTypes.remove(type);
         break;
       }
     }
@@ -49,7 +49,7 @@ public class PasswordController extends Controller {
     passwordSetter();
 
     // Set de waarden in de ComboBox
-    passwordBox.setItems(passwordTypes.getTypes());
+    passwordBox.setItems(passwordTypes);
 
     // Set de beginwaarde van de Slider
     passLength.setMin(minLength);

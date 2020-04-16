@@ -31,14 +31,14 @@ public class PassphraseController extends Controller {
   @Override
   protected void initialize() throws IOException {
     passwordRules.put("type", "passphrase");
-    passwordRules.put("seperator", " ");
-    passwordRules.put("capital", "true");
-    passwordRules.put("numberic", "true");
+    passwordRules.put("seperator", wordSeperator.getText());
+    passwordRules.put("capital", "" + capital.isSelected() + "");
+    passwordRules.put("numberic", "" + numberic.isSelected() + "");
 
-    for (String type : passwordTypes.getTypes()) {
+    for (String type : passwordTypes) {
       if ((passwordRules.get("type").toLowerCase()).equals(type.toLowerCase())) {
         passwordBox.setValue(type);
-        passwordTypes.getTypes().remove(type);
+        passwordTypes.remove(type);
         break;
       }
     }
@@ -47,7 +47,7 @@ public class PassphraseController extends Controller {
     passwordSetter();
 
     // Set de waarden in de ComboBox
-    passwordBox.setItems(passwordTypes.getTypes());
+    passwordBox.setItems(passwordTypes);
 
     // Set de randvoorwaarden in de Spinner
     passLength.setValueFactory(limietWaarden);
