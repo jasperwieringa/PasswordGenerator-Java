@@ -76,13 +76,13 @@
                         <AnchorPane maxHeight="40.0" minHeight="40.0" prefHeight="40.0" prefWidth="200.0" styleClass="button" GridPane.rowIndex="2">
                            <children>
                               <Label prefHeight="40.0" prefWidth="100.0" text="Capitalize" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="217.0" AnchorPane.topAnchor="0.0" />
-                              <CheckBox fx:id="capital" alignment="CENTER_RIGHT" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" layoutX="104.0" layoutY="10.0" maxHeight="40.0" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="0.0" selected="true" text="CheckBox" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                              <CheckBox fx:id="capital" alignment="CENTER_RIGHT" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" layoutX="104.0" layoutY="10.0" maxHeight="40.0" minHeight="40.0" mnemonicParsing="false" onAction="#setState" prefHeight="40.0" prefWidth="0.0" selected="true" text="CheckBox" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                            </children>
                         </AnchorPane>
                         <AnchorPane maxHeight="40.0" minHeight="40.0" prefHeight="40.0" prefWidth="200.0" styleClass="button" GridPane.rowIndex="3">
                            <children>
                               <Label prefHeight="40.0" prefWidth="129.0" text="Include Number" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="182.0" AnchorPane.topAnchor="0.0" />
-                              <CheckBox fx:id="numberic" alignment="CENTER_RIGHT" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" layoutX="104.0" layoutY="10.0" maxHeight="40.0" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="0.0" selected="true" text="CheckBox" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                              <CheckBox fx:id="numberic" alignment="CENTER_RIGHT" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" layoutX="104.0" layoutY="10.0" maxHeight="40.0" minHeight="40.0" mnemonicParsing="false" onAction="#setState" prefHeight="40.0" prefWidth="0.0" selected="true" text="CheckBox" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                            </children>
                         </AnchorPane>
                      </children>

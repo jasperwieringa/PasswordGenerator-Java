@@ -1,10 +1,14 @@
 package org.openjfx.passwordgenerator;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
+import java.io.BufferedReader;
+import java.io.FileReader;
 
 public class Password {
   private String password;
@@ -35,7 +39,7 @@ public class Password {
 
     // Als het type wachtwoord een 'password' is
     if ((passwordRules.get("type").toLowerCase()).equals("password")) {
-      
+
       // Check alle wachtwoord regels
       this.upper = (passwordRules.get("upper")).equals("true");
       this.lower = (passwordRules.get("lower")).equals("true");
@@ -69,31 +73,55 @@ public class Password {
 
       // Shuffle het wachtwoord om logica te vermijden
       newPassword = shufflePassword(generatedPassword + requiredString);
-    }
-
-    // Anders
-    else {
-      newPassword = "Passphrase generated";
+    } else {
+      generatePassphrase(length, passwordRules);
     }
 
     this.password = newPassword;
   };
 
   // Genereer een wachtwoord o.b.v. alle voorwaarden binnen de passwordAllowed
-  private String generatePassword(int length, String passwordAllowed) {
+  private String generatePassword(int length, String passwordString) {
     if (length < 1)
       throw new IllegalArgumentException();
 
     StringBuilder stringBuilder = new StringBuilder(length);
     for (int i = 0; i < length; i++) {
 
-      int randomCharAt = (int) (Math.random() * passwordAllowed.length());
-      char randomChar = passwordAllowed.charAt(randomCharAt);
+      int randomCharAt = (int) (Math.random() * passwordString.length());
+      char randomChar = passwordString.charAt(randomCharAt);
 
       stringBuilder.append(randomChar);
 
     }
     return stringBuilder.toString();
+  }
+
+  // Genereer een passphrase vanuit een dictionary
+  private String generatePassphrase(int length, Hashtable<String, String> passwordRules) {
+    try {
+      BufferedReader dictionary = new BufferedReader(new FileReader("src/main/resources/dict/en.txt"));
+      String line = dictionary.readLine();
+      List<String> words = new ArrayList<String>();
+      
+      while (line != null) {
+        words.add(line);
+        line = dictionary.readLine();
+      }
+
+      // Genereer een willekeurig nummer
+      Random wordPicker = new Random(System.currentTimeMillis());
+
+      // Pak een willekeurig woord uit de dictionary o.b.v. de wordPicker
+      String randomWord = words.get(wordPicker.nextInt(words.size()));
+
+      System.out.println(randomWord);
+
+    } catch (Exception e) {
+      System.out.println(e);
+    }
+
+    return "Hi";
   }
 
   // Shuffle het wachtwoord
