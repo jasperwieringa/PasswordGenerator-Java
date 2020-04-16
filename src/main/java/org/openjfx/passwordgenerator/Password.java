@@ -78,7 +78,7 @@ public class Password {
       // Check alle wachtwoord regels
       this.capitalize = (passwordRules.get("capital")).equals("true");
       this.numberic = (passwordRules.get("numberic")).equals("true");
-      this.seperator = passwordRules.get("seperator");
+      this.seperator = (passwordRules.get("seperator").equals("")) ? " " : passwordRules.get("seperator");
 
       this.password = generatePassphrase(length);
     }

@@ -16,7 +16,8 @@ public class PassphraseController extends Controller {
   @FXML
   private Spinner<Integer> passLength = new Spinner<>(3, 20, 0, 1); // Min 3, Max 20, in stappen van 1
   @FXML
-  private SpinnerValueFactory.IntegerSpinnerValueFactory limietWaarden = (SpinnerValueFactory.IntegerSpinnerValueFactory) passLength.getValueFactory();
+  private SpinnerValueFactory.IntegerSpinnerValueFactory limietWaarden = (SpinnerValueFactory.IntegerSpinnerValueFactory) passLength
+      .getValueFactory();
   @FXML
   private TextField wordSeperator;
   @FXML
@@ -47,7 +48,7 @@ public class PassphraseController extends Controller {
         break;
       }
     }
-    
+
     passwordBox.setItems(passwordTypes.getTypes());
 
     // Set de randvoorwaarden in de Spinner
@@ -64,6 +65,17 @@ public class PassphraseController extends Controller {
       }
     });
 
+    // Voeg een listener toe om de waarde van de seperator te gebruiken
+    wordSeperator.textProperty().addListener((observable, oldValue, newValue) -> {
+      passwordRules.editRules("seperator", newValue);
+
+      try {
+        generatePassword();
+      } catch (IOException e) {
+        System.out.println(e);
+      }
+    });
+
     // Genereer een wachtwoord bij het initialiseren van de controller
     generatePassword();
   };
@@ -72,8 +84,8 @@ public class PassphraseController extends Controller {
   @Override
   protected void setState(ActionEvent event) throws IOException {
     CheckBox type = (CheckBox) event.getSource();
+    passwordRules.editRules(type.getId(), "" + type.isSelected() + "");
 
-    passwordRules.editRules(type.getId(), type.isSelected());
     generatePassword();
   }
 

@@ -86,7 +86,7 @@ public class PasswordController extends Controller {
     if (!type.isSelected() && changeAllowed()) {
       type.setSelected(false);
 
-      passwordRules.editRules(type.getId(), type.isSelected());
+      passwordRules.editRules(type.getId(), ""+type.isSelected()+"");
       generatePassword();
     } 
     // Als checkbox false is maar de checkbox mag niet worden gewijzigd
@@ -95,7 +95,7 @@ public class PasswordController extends Controller {
     } 
     // Als checkbox true is
     else {
-      passwordRules.editRules(type.getId(), type.isSelected());
+      passwordRules.editRules(type.getId(), ""+type.isSelected()+"");
       generatePassword();
     }
   }

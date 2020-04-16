@@ -9,11 +9,11 @@ public class PasswordRules {
     this.passwordRules = rules;
   }
 
-  protected void editRules(String type, Boolean value) {
+  protected void editRules(String type, String value) {
     type = type.toLowerCase();
-    String stringValue = (value == true) ? "true" : "false";
+    value = value.toLowerCase();
 
-    this.passwordRules.replace(type, stringValue);
+    this.passwordRules.replace(type, value);
   }
 
   protected Hashtable<String, String> getRules() {
