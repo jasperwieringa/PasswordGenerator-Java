@@ -38,8 +38,8 @@
                   </Label>
                   <Pane layoutY="67.0" maxHeight="80.0" minHeight="80.0" prefHeight="80.0" prefWidth="320.0" AnchorPane.topAnchor="80.0">
                      <children>
-                        <Button fx:id="generateButton" alignment="BASELINE_LEFT" defaultButton="true" maxHeight="40.0" minHeight="40.0" onAction="#passwordSetter" prefHeight="40.0" prefWidth="320.0" text="Regenerate password" />
-                        <Button fx:id="copyButton" alignment="BASELINE_LEFT" defaultButton="true" layoutY="40.0" maxHeight="40.0" minHeight="40.0" onAction="#copyPassword" prefHeight="40.0" prefWidth="320.0" text="Copy password" />
+                        <Button fx:id="generateButton" alignment="BASELINE_LEFT" defaultButton="true" maxHeight="40.0" minHeight="40.0" prefHeight="40.0" prefWidth="320.0" onAction="#generatePassword" text="Regenerate password" />
+                        <Button fx:id="copyButton" alignment="BASELINE_LEFT" defaultButton="true" layoutY="40.0" maxHeight="40.0" minHeight="40.0" prefHeight="40.0" prefWidth="320.0" onAction="#copyPassword" text="Copy password" />
                      </children>
                   </Pane>
                   <Pane layoutY="160.0" maxHeight="40.0" minHeight="40.0" prefHeight="40.0" prefWidth="320.0" AnchorPane.topAnchor="170.0">

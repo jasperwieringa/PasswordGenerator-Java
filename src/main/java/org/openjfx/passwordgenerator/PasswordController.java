@@ -2,6 +2,7 @@ package org.openjfx.passwordgenerator;
 
 import java.io.IOException;
 import java.util.Hashtable;
+import java.util.Set;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -12,8 +13,6 @@ import javafx.scene.control.Slider;
 public class PasswordController extends Controller {
   private int minLength = 5;
   private int maxLength = 128;
-  private int passwordLength = minLength;
-  private Hashtable<String, String> passwordRules = new Hashtable<String, String>();
 
   @FXML
   private Label passLengthLabel;
@@ -31,44 +30,51 @@ public class PasswordController extends Controller {
   @FXML
   @Override
   protected void initialize() throws IOException {
-    passwordRules.put("type", "password");
-    passwordRules.put("upper", "" + upper.isSelected() + "");
-    passwordRules.put("lower", "" + lower.isSelected() + "");
-    passwordRules.put("numberic", "" + numberic.isSelected() + "");
-    passwordRules.put("special", "" + special.isSelected() + "");
+    Hashtable<String, String> rules = new Hashtable<String, String>();
+    rules.put("type", "password");
+    rules.put("upper", "" + upper.isSelected() + "");
+    rules.put("lower", "" + lower.isSelected() + "");
+    rules.put("numberic", "" + numberic.isSelected() + "");
+    rules.put("special", "" + special.isSelected() + "");
 
-    for (String type : passwordTypes) {
-      if ((passwordRules.get("type").toLowerCase()).equals(type.toLowerCase())) {
+    // Set de regels
+    passwordRules.setRules(rules);
+
+    // Set de password length
+    passwordLength.setLength(minLength);
+
+    // Set de dropdown
+    for (String type : passwordTypes.getTypes()) {
+      if ((passwordRules.getRules().get("type").toLowerCase()).equals(type.toLowerCase())) {
         passwordBox.setValue(type);
-        passwordTypes.remove(type);
+        passwordTypes.removeType(type);
         break;
       }
     }
 
-    // Genereer een wachtwoord bij het initialiseren van de controller
-    passwordSetter();
-
-    // Set de waarden in de ComboBox
-    passwordBox.setItems(passwordTypes);
+    passwordBox.setItems(passwordTypes.getTypes());
 
     // Set de beginwaarde van de Slider
     passLength.setMin(minLength);
     passLength.setMax(maxLength);
-    passLength.setValue(passwordLength);
+    passLength.setValue(passwordLength.getLength());
     passLengthLabel.setText("" + passLength.valueProperty().getValue().intValue() + "");
 
     // Voeg een listener toe om de waarde van de Slider te gebruiken
     passLength.valueProperty().addListener((observable, oldValue, newValue) -> {
-      passwordLength = newValue.intValue();
+      passwordLength.setLength(newValue.intValue());
       passLengthLabel.setText("" + passwordLength + "");
 
       // Genereer een nieuw wachtwoord
       try {
-        passwordSetter();
+        generatePassword();
       } catch (IOException e) {
         System.out.println(e);
       }
     });
+
+    // Genereer een wachtwoord bij het initialiseren van de controller
+    generatePassword();
   };
 
   @FXML
@@ -77,36 +83,46 @@ public class PasswordController extends Controller {
     CheckBox type = (CheckBox) event.getSource();
 
     // Als checkbox false is en de checkbox mag worden gewijzigd
-    if (!type.isSelected() && changeAllowed(passwordRules)) {
+    if (!type.isSelected() && changeAllowed()) {
       type.setSelected(false);
 
-      setRules(type.getId(), type.isSelected());
-      passwordSetter();
+      passwordRules.editRules(type.getId(), type.isSelected());
+      generatePassword();
     } 
     // Als checkbox false is maar de checkbox mag niet worden gewijzigd
-    else if (!type.isSelected() && !changeAllowed(passwordRules)) {
+    else if (!type.isSelected() && !changeAllowed()) {
       type.setSelected(true);
     } 
     // Als checkbox true is
     else {
-      setRules(type.getId(), type.isSelected());
-      passwordSetter();
+      passwordRules.editRules(type.getId(), type.isSelected());
+      generatePassword();
     }
   }
 
-  @Override
-  protected void setRules(String type, Boolean value) throws IOException {
-    type = type.toLowerCase();
-    String stringValue = (value == true) ? "true" : "false";
+  // Controleer of de gebruiker de checkbox uit mag zetten
+  private Boolean changeAllowed() {
+    Boolean can_change = false;
 
-    passwordRules.replace(type, stringValue);
-  };
+    if (passwordRules.getRules().size() > 0) {
+      Set<String> rules = passwordRules.getRules().keySet();
 
-  @FXML
-  @Override
-  protected void passwordSetter() throws IOException {
-    generatePassword(passwordLength, passwordRules);
-  };
+      int min_selected = 0;
+
+      for (String rule : rules) {
+        if (passwordRules.getRules().get(rule).equals("true")) {
+          min_selected += 1;
+        }
+      }
+
+      // Wanneer er op z'n minst 2 checkboxen aan staan
+      if (min_selected > 1) {
+        can_change = true;
+      }
+    }
+
+    return can_change;
+  }
 
   @FXML
   @Override

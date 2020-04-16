@@ -12,14 +12,11 @@ import javafx.scene.control.CheckBox;
 
 public class PassphraseController extends Controller {
   private int minLength = 3;
-  private int passwordLength = minLength;
-  private Hashtable<String, String> passwordRules = new Hashtable<String, String>();
 
   @FXML
   private Spinner<Integer> passLength = new Spinner<>(3, 20, 0, 1); // Min 3, Max 20, in stappen van 1
   @FXML
-  private SpinnerValueFactory.IntegerSpinnerValueFactory limietWaarden = (SpinnerValueFactory.IntegerSpinnerValueFactory) passLength
-      .getValueFactory();
+  private SpinnerValueFactory.IntegerSpinnerValueFactory limietWaarden = (SpinnerValueFactory.IntegerSpinnerValueFactory) passLength.getValueFactory();
   @FXML
   private TextField wordSeperator;
   @FXML
@@ -30,38 +27,45 @@ public class PassphraseController extends Controller {
   @FXML
   @Override
   protected void initialize() throws IOException {
-    passwordRules.put("type", "passphrase");
-    passwordRules.put("seperator", wordSeperator.getText());
-    passwordRules.put("capital", "" + capital.isSelected() + "");
-    passwordRules.put("numberic", "" + numberic.isSelected() + "");
+    Hashtable<String, String> rules = new Hashtable<String, String>();
+    rules.put("type", "passphrase");
+    rules.put("seperator", wordSeperator.getText());
+    rules.put("capital", "" + capital.isSelected() + "");
+    rules.put("numberic", "" + numberic.isSelected() + "");
 
-    for (String type : passwordTypes) {
-      if ((passwordRules.get("type").toLowerCase()).equals(type.toLowerCase())) {
+    // Set de regels
+    passwordRules.setRules(rules);
+
+    // Set de password length
+    passwordLength.setLength(minLength);
+
+    // Set de dropdown
+    for (String type : passwordTypes.getTypes()) {
+      if ((passwordRules.getRules().get("type").toLowerCase()).equals(type.toLowerCase())) {
         passwordBox.setValue(type);
-        passwordTypes.remove(type);
+        passwordTypes.removeType(type);
         break;
       }
     }
-
-    // Genereer een wachtwoord bij het initialiseren van de controller
-    passwordSetter();
-
-    // Set de waarden in de ComboBox
-    passwordBox.setItems(passwordTypes);
+    
+    passwordBox.setItems(passwordTypes.getTypes());
 
     // Set de randvoorwaarden in de Spinner
     passLength.setValueFactory(limietWaarden);
 
     // Voeg een listener toe om de waarde van de Spinner te gebruiken
     passLength.valueProperty().addListener((observable, oldValue, newValue) -> {
-      passwordLength = newValue.intValue();
+      passwordLength.setLength(newValue.intValue());
 
       try {
-        passwordSetter();
+        generatePassword();
       } catch (IOException e) {
         System.out.println(e);
       }
     });
+
+    // Genereer een wachtwoord bij het initialiseren van de controller
+    generatePassword();
   };
 
   @FXML
@@ -69,23 +73,9 @@ public class PassphraseController extends Controller {
   protected void setState(ActionEvent event) throws IOException {
     CheckBox type = (CheckBox) event.getSource();
 
-    setRules(type.getId(), type.isSelected());
-    passwordSetter();
+    passwordRules.editRules(type.getId(), type.isSelected());
+    generatePassword();
   }
-
-  @Override
-  protected void setRules(String type, Boolean value) throws IOException {
-    type = type.toLowerCase();
-    String stringValue = (value == true) ? "true" : "false";
-
-    passwordRules.replace(type, stringValue);
-  };
-
-  @FXML
-  @Override
-  protected void passwordSetter() throws IOException {
-    generatePassword(passwordLength, passwordRules);
-  };
 
   @FXML
   @Override
