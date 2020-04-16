@@ -69,22 +69,8 @@ public class PassphraseController extends Controller {
   protected void setState(ActionEvent event) throws IOException {
     CheckBox type = (CheckBox) event.getSource();
 
-    // Als checkbox false is en de checkbox mag worden gewijzigd
-    if (!type.isSelected() && changeAllowed(passwordRules)) {
-      type.setSelected(false);
-
-      setRules(type.getId(), type.isSelected());
-      passwordSetter();
-    } 
-    // Als checkbox false is maar de checkbox mag niet worden gewijzigd
-    else if (!type.isSelected() && !changeAllowed(passwordRules)) {
-      type.setSelected(true);
-    } 
-    // Als checkbox true is
-    else {
-      setRules(type.getId(), type.isSelected());
-      passwordSetter();
-    }
+    setRules(type.getId(), type.isSelected());
+    passwordSetter();
   }
 
   @Override

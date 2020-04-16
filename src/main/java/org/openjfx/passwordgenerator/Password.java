@@ -27,34 +27,33 @@ public class Password {
   private Boolean capitalize;
   private String seperator;
 
+  // Password
   protected Password(String password) {
     this.password = password;
   };
 
   // Genereer een wachtwoord
   protected void generatePassword(int length, Hashtable<String, String> passwordRules) {
-    String newPassword = "";
-
     // Als het type wachtwoord een 'password' is
     if ((passwordRules.get("type").toLowerCase()).equals("password")) {
       String passwordLibrary = ""; // Lege String voor de beschikbare characters voor het wachtwoord
       String requiredString = ""; // Lege String voor de vereiste characters voor het wachtwoord
 
       // Check alle wachtwoord regels
-      this.upper = (passwordRules.get("upper")).equals("true");
       this.lower = (passwordRules.get("lower")).equals("true");
+      this.upper = (passwordRules.get("upper")).equals("true");
       this.numberic = (passwordRules.get("numberic")).equals("true");
       this.special = (passwordRules.get("special")).equals("true");
 
-      // Als hoofdletter vereist is
-      if (this.upper) {
-        requiredString += generatePassword(1, upperString);
-        passwordLibrary += upperString;
-      }
       // Als kleine letter vereist is
       if (this.lower) {
         requiredString += generatePassword(1, lowerString);
         passwordLibrary += lowerString;
+      }
+      // Als hoofdletter vereist is
+      if (this.upper) {
+        requiredString += generatePassword(1, upperString);
+        passwordLibrary += upperString;
       }
       // Als een nummer vereist is
       if (this.numberic) {
@@ -72,7 +71,7 @@ public class Password {
       String generatedPassword = generatePassword(length - requiredString.length(), passwordLibrary);
 
       // Shuffle het wachtwoord om logica te vermijden
-      newPassword = shufflePassword(generatedPassword + requiredString);
+      this.password = shufflePassword(generatedPassword + requiredString);
     }
 
     else {
@@ -81,10 +80,13 @@ public class Password {
       this.numberic = (passwordRules.get("numberic")).equals("true");
       this.seperator = passwordRules.get("seperator");
 
-      newPassword = generatePassphrase(length);
+      this.password = generatePassphrase(length);
     }
+  };
 
-    this.password = newPassword;
+  // Return wachtwoord (voor de copyPassword function)
+  protected String getPassword() {
+    return this.password;
   };
 
   // Genereer een wachtwoord
@@ -146,7 +148,7 @@ public class Password {
 
       // Zolang het niet het laatste woord is, kan een seperator worden toegevoegd
       if (i != length) { 
-        passPhrase += seperator;
+        passPhrase += this.seperator;
       }
     }
 
@@ -169,9 +171,4 @@ public class Password {
 
     return str.substring(0, 1).toUpperCase() + str.substring(1);
   }
-
-  // Return password (voor de copyPassword function)
-  protected String getPassword() {
-    return this.password;
-  };
 }
