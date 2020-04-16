@@ -52,7 +52,7 @@ public abstract class Controller {
     if (passwordRules.size() > 0) {
       Set<String> rules = passwordRules.keySet();
 
-      int min_selected = 1;
+      int min_selected = 0;
 
       for (String rule : rules) {
         if (passwordRules.get(rule).equals("true")) {
@@ -70,11 +70,13 @@ public abstract class Controller {
   };
 
   // Abstracte methoden
-  protected abstract void initialize() throws IOException;
+  protected abstract void initialize() throws IOException; // Initializer voor elke controller
 
-  protected abstract void setRules(String type, String value);
+  protected abstract void setState(ActionEvent event) throws IOException; // setState voor de checkbox passwordRules
 
-  protected abstract void passwordSetter() throws IOException;
+  protected abstract void setRules(String type, Boolean value) throws IOException; // setRules om de passwordRules bij te werken
 
-  protected abstract void switchTo() throws IOException;
+  protected abstract void passwordSetter() throws IOException; // passwordSetter om generatePassword vanuit de controller op te roepen
+
+  protected abstract void switchTo() throws IOException; // switchTo om van controller te switchen
 }

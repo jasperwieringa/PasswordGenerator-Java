@@ -2,7 +2,6 @@ package org.openjfx.passwordgenerator;
 
 import java.io.IOException;
 import java.util.Hashtable;
-import java.util.Set;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -63,59 +62,44 @@ public class PasswordController extends Controller {
       passwordLength = newValue.intValue();
       passLengthLabel.setText("" + passwordLength + "");
 
+      // Genereer een nieuw wachtwoord
       try {
         passwordSetter();
       } catch (IOException e) {
         System.out.println(e);
       }
     });
-
-    // Voeg een listener toe om de waarde van de toggle (upper) te gebruiken
-    upper.selectedProperty().addListener(((observable, oldValue, newValue) -> {
-      setRules("upper", "" + newValue + "");
-      if (changeAllowed(passwordRules)) {
-        upper.setSelected(newValue);
-      } else {
-        upper.setSelected(true);
-      }
-    }));
-
-    // Voeg een listener toe om de waarde van de toggle (lower) te gebruiken
-    lower.selectedProperty().addListener(((observable, oldValue, newValue) -> {
-      setRules("lower", "" + newValue + "");
-      if (changeAllowed(passwordRules)) {
-        lower.setSelected(newValue);
-      } else {
-        lower.setSelected(true);
-      }
-
-    }));
-
-    // Voeg een listener toe om de waarde van de toggle (numberic) te gebruiken
-    numberic.selectedProperty().addListener(((observable, oldValue, newValue) -> {
-      setRules("numberic", "" + newValue + "");
-      if (changeAllowed(passwordRules)) {
-        numberic.setSelected(newValue);
-      } else {
-        numberic.setSelected(true);
-      }
-    }));
-
-    // Voeg een listener toe om de waarde van de toggle (special) te gebruiken
-    special.selectedProperty().addListener(((observable, oldValue, newValue) -> {
-      setRules("special", "" + newValue + "");
-      if (changeAllowed(passwordRules)) {
-        special.setSelected(newValue);
-      } else {
-        special.setSelected(true);
-      }
-    }));
   };
 
+  @FXML
   @Override
-  protected void setRules(String type, String value) {
+  protected void setState(ActionEvent event) throws IOException {
+    CheckBox type = (CheckBox) event.getSource();
+
+    // Als checkbox false is en de checkbox mag worden gewijzigd
+    if (!type.isSelected() && changeAllowed(passwordRules)) {
+      type.setSelected(false);
+
+      setRules(type.getId(), type.isSelected());
+      passwordSetter();
+    } 
+    // Als checkbox false is maar de checkbox mag niet worden gewijzigd
+    else if (!type.isSelected() && !changeAllowed(passwordRules)) {
+      type.setSelected(true);
+    } 
+    // Als checkbox true is
+    else {
+      setRules(type.getId(), type.isSelected());
+      passwordSetter();
+    }
+  }
+
+  @Override
+  protected void setRules(String type, Boolean value) throws IOException {
     type = type.toLowerCase();
-    passwordRules.replace(type, value);
+    String stringValue = (value == true) ? "true" : "false";
+
+    passwordRules.replace(type, stringValue);
   };
 
   @FXML

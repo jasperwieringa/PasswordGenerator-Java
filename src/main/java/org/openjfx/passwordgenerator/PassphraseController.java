@@ -3,6 +3,7 @@ package org.openjfx.passwordgenerator;
 import java.io.IOException;
 import java.util.Hashtable;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
@@ -61,26 +62,37 @@ public class PassphraseController extends Controller {
         System.out.println(e);
       }
     });
-
-    // Voeg een listener toe om de waarde van de toggle (capital) te gebruiken
-    capital.selectedProperty().addListener(((observable, oldValue, newValue) -> {
-      if(changeAllowed(passwordRules)) {
-        setRules("capital", "" + newValue + "");
-      }
-    }));
-
-    // Voeg een listener toe om de waarde van de toggle (numberic) te gebruiken
-    numberic.selectedProperty().addListener(((observable, oldValue, newValue) -> {
-      if(changeAllowed(passwordRules)) {
-        setRules("numberic", "" + newValue + "");
-      }
-    }));
   };
 
+  @FXML
   @Override
-  protected void setRules(String type, String value) {
+  protected void setState(ActionEvent event) throws IOException {
+    CheckBox type = (CheckBox) event.getSource();
+
+    // Als checkbox false is en de checkbox mag worden gewijzigd
+    if (!type.isSelected() && changeAllowed(passwordRules)) {
+      type.setSelected(false);
+
+      setRules(type.getId(), type.isSelected());
+      passwordSetter();
+    } 
+    // Als checkbox false is maar de checkbox mag niet worden gewijzigd
+    else if (!type.isSelected() && !changeAllowed(passwordRules)) {
+      type.setSelected(true);
+    } 
+    // Als checkbox true is
+    else {
+      setRules(type.getId(), type.isSelected());
+      passwordSetter();
+    }
+  }
+
+  @Override
+  protected void setRules(String type, Boolean value) throws IOException {
     type = type.toLowerCase();
-    passwordRules.replace(type, value);
+    String stringValue = (value == true) ? "true" : "false";
+
+    passwordRules.replace(type, stringValue);
   };
 
   @FXML
