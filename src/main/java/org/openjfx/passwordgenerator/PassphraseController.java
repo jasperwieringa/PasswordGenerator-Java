@@ -64,13 +64,23 @@ public class PassphraseController extends Controller {
 
     // Voeg een listener toe om de waarde van de toggle (capital) te gebruiken
     capital.selectedProperty().addListener(((observable, oldValue, newValue) -> {
-      toggleType(oldValue, newValue);
+      if(changeAllowed(passwordRules)) {
+        setRules("capital", "" + newValue + "");
+      }
     }));
 
     // Voeg een listener toe om de waarde van de toggle (numberic) te gebruiken
     numberic.selectedProperty().addListener(((observable, oldValue, newValue) -> {
-      toggleType(oldValue, newValue);
+      if(changeAllowed(passwordRules)) {
+        setRules("numberic", "" + newValue + "");
+      }
     }));
+  };
+
+  @Override
+  protected void setRules(String type, String value) {
+    type = type.toLowerCase();
+    passwordRules.replace(type, value);
   };
 
   @FXML

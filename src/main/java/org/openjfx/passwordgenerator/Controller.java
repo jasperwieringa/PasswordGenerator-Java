@@ -3,6 +3,7 @@ package org.openjfx.passwordgenerator;
 import java.io.IOException;
 
 import java.util.Hashtable;
+import java.util.Set;
 
 import javafx.fxml.FXML;
 import javafx.collections.FXCollections;
@@ -43,15 +44,29 @@ public abstract class Controller {
     clipboard.setContent(content);
   }
 
-  // Toggle de aan/uit van een checkbox
-  @FXML
-  protected void toggleType(Boolean oldValue, Boolean newValue) {
-    System.out.println("changed from " + oldValue + " to " + newValue);
-  }
+  // Controleer of de gebruiker de checkbox uit mag zetten
+  protected Boolean changeAllowed(Hashtable<String, String> passwordRules) {
+    Boolean can_change = false;
+
+    if (passwordRules.size() > 0) {
+      Set<String> rules = passwordRules.keySet();
+
+      for (String rule : rules) {
+        if (passwordRules.get(rule) == "true") {
+          can_change = true;
+          break;
+        }
+      }
+    }
+
+    return can_change;
+  };
 
   // Abstracte methoden
   protected abstract void initialize() throws IOException;
-  
+
+  protected abstract void setRules(String type, String value);
+
   protected abstract void passwordSetter() throws IOException;
 
   protected abstract void switchTo() throws IOException;

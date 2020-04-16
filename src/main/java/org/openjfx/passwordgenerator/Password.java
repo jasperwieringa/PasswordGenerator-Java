@@ -29,12 +29,13 @@ public class Password {
 
   // Genereer een wachtwoord
   protected void generatePassword(int length, Hashtable<String, String> passwordRules) {
-    String passwordLibrary = ""; // Lege library voor de beschikbare characters voor het wachtwoord
-    String requiredString = ""; // Lege library voor de vereiste characters voor het wachtwoord
+    String passwordLibrary = ""; // Lege String voor de beschikbare characters voor het wachtwoord
+    String requiredString = ""; // Lege String voor de vereiste characters voor het wachtwoord
     String newPassword = "";
 
     // Als het type wachtwoord een 'password' is
     if ((passwordRules.get("type").toLowerCase()).equals("password")) {
+      
       // Check alle wachtwoord regels
       this.upper = (passwordRules.get("upper")).equals("true");
       this.lower = (passwordRules.get("lower")).equals("true");
@@ -78,13 +79,8 @@ public class Password {
     this.password = newPassword;
   };
 
-  // Return password (voor de copyPassword function)
-  protected String getPassword() {
-    return this.password;
-  };
-
   // Genereer een wachtwoord o.b.v. alle voorwaarden binnen de passwordAllowed
-  protected static String generatePassword(int length, String passwordAllowed) {
+  private String generatePassword(int length, String passwordAllowed) {
     if (length < 1)
       throw new IllegalArgumentException();
 
@@ -101,10 +97,15 @@ public class Password {
   }
 
   // Shuffle het wachtwoord
-  protected static String shufflePassword(String wachtwoord) {
+  private String shufflePassword(String wachtwoord) {
     List<String> letters = Arrays.asList(wachtwoord.split(""));
     Collections.shuffle(letters);
 
     return letters.stream().collect(Collectors.joining());
   }
+
+  // Return password (voor de copyPassword function)
+  protected String getPassword() {
+    return this.password;
+  };
 }

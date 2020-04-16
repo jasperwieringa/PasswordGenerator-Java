@@ -2,6 +2,7 @@ package org.openjfx.passwordgenerator;
 
 import java.io.IOException;
 import java.util.Hashtable;
+import java.util.Set;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
@@ -30,7 +31,7 @@ public class PasswordController extends Controller {
   @FXML
   @Override
   protected void initialize() throws IOException {
-    passwordRules.put("type", "PaSSwOrD");
+    passwordRules.put("type", "password");
     passwordRules.put("upper", "true");
     passwordRules.put("lower", "true");
     passwordRules.put("numberic", "true");
@@ -59,7 +60,6 @@ public class PasswordController extends Controller {
     // Voeg een listener toe om de waarde van de Slider te gebruiken
     passLength.valueProperty().addListener((observable, oldValue, newValue) -> {
       passwordLength = newValue.intValue();
-
       passLengthLabel.setText("" + passwordLength + "");
 
       try {
@@ -71,23 +71,37 @@ public class PasswordController extends Controller {
 
     // Voeg een listener toe om de waarde van de toggle (upper) te gebruiken
     upper.selectedProperty().addListener(((observable, oldValue, newValue) -> {
-      toggleType(oldValue, newValue);
+      if (changeAllowed(passwordRules)) {
+        setRules("upper", "" + newValue + "");
+      }
     }));
 
     // Voeg een listener toe om de waarde van de toggle (lower) te gebruiken
     lower.selectedProperty().addListener(((observable, oldValue, newValue) -> {
-      toggleType(oldValue, newValue);
+      if (changeAllowed(passwordRules)) {
+        setRules("lower", "" + newValue + "");
+      }
     }));
 
     // Voeg een listener toe om de waarde van de toggle (numberic) te gebruiken
     numberic.selectedProperty().addListener(((observable, oldValue, newValue) -> {
-      toggleType(oldValue, newValue);
+      if (changeAllowed(passwordRules)) {
+        setRules("numberic", "" + newValue + "");
+      }
     }));
 
     // Voeg een listener toe om de waarde van de toggle (special) te gebruiken
     special.selectedProperty().addListener(((observable, oldValue, newValue) -> {
-      toggleType(oldValue, newValue);
+      if (changeAllowed(passwordRules)) {
+        setRules("special", "" + newValue + "");
+      }
     }));
+  };
+
+  @Override
+  protected void setRules(String type, String value) {
+    type = type.toLowerCase();
+    passwordRules.replace(type, value);
   };
 
   @FXML
