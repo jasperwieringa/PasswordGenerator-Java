@@ -31,7 +31,7 @@
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="624.0" prefWidth="320.0">
                <children>
-                  <Label fx:id="passwordLabel" alignment="CENTER" maxHeight="80.0" minHeight="80.0" prefHeight="80.0" prefWidth="320.0" text="Passphrase" textAlignment="CENTER" AnchorPane.topAnchor="0.0">
+                  <Label fx:id="passwordLabel" alignment="CENTER" minHeight="80.0" prefHeight="80.0" prefWidth="320.0" maxWidth="320.0" text="Passphrase" textAlignment="CENTER" AnchorPane.topAnchor="0.0">
                      <font>
                         <Font size="18.0" />
                      </font>

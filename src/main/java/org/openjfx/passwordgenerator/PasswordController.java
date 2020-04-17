@@ -58,12 +58,12 @@ public class PasswordController extends Controller {
     passLength.setMin(minLength);
     passLength.setMax(maxLength);
     passLength.setValue(passwordLength.getLength());
-    passLengthLabel.setText("" + passLength.valueProperty().getValue().intValue() + "");
+    passLengthLabel.setText("" + minLength + "");
 
     // Voeg een listener toe om de waarde van de Slider te gebruiken
     passLength.valueProperty().addListener((observable, oldValue, newValue) -> {
       passwordLength.setLength(newValue.intValue());
-      passLengthLabel.setText("" + passwordLength + "");
+      passLengthLabel.setText("" + passwordLength.getLength() + "");
 
       // Genereer een nieuw wachtwoord
       try {
