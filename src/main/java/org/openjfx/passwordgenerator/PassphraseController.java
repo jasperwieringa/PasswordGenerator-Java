@@ -1,7 +1,6 @@
 package org.openjfx.passwordgenerator;
 
 import java.io.IOException;
-import java.util.Hashtable;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -25,22 +24,19 @@ public class PassphraseController extends Controller {
   @FXML
   private CheckBox numberic;
 
+
   @FXML
   @Override
   protected void initialize() throws IOException {
-    Hashtable<String, String> rules = new Hashtable<String, String>();
-    rules.put("type", "passphrase");
-    rules.put("seperator", wordSeperator.getText());
-    rules.put("capital", "" + capital.isSelected() + "");
-    rules.put("numberic", "" + numberic.isSelected() + "");
-
-    // Set de regels
-    passwordRules.setRules(rules);
+    passwordRules.addRules("type", "passphrase");
+    passwordRules.addRules("seperator", wordSeperator.getText());
+    passwordRules.addRules("capital", "" + capital.isSelected() + "");
+    passwordRules.addRules("numberic", "" + numberic.isSelected() + "");
 
     // Set de password length
     passwordLength.setLength(minLength);
 
-    // Set de dropdown
+    // Bepaal welke item(s) de dropdown krijgt
     for (String type : passwordTypes.getTypes()) {
       if ((passwordRules.getRules().get("type").toLowerCase()).equals(type.toLowerCase())) {
         passwordBox.setValue(type);
@@ -48,7 +44,8 @@ public class PassphraseController extends Controller {
         break;
       }
     }
-
+    
+    // Set de dropdown
     passwordBox.setItems(passwordTypes.getTypes());
 
     // Set de randvoorwaarden in de Spinner

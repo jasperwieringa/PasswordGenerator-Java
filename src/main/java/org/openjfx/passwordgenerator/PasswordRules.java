@@ -5,8 +5,15 @@ import java.util.Hashtable;
 public class PasswordRules {
   private Hashtable<String, String> passwordRules;
 
-  protected void setRules(Hashtable<String, String> rules) {
-    this.passwordRules = rules;
+  protected PasswordRules(Hashtable<String, String> table) {
+    this.passwordRules = table;
+  }
+
+  protected void addRules(String type, String value) {
+    type = type.toLowerCase();
+    value = value.toLowerCase();
+
+    this.passwordRules.put(type, value);
   }
 
   protected void editRules(String type, String value) {

@@ -1,7 +1,6 @@
 package org.openjfx.passwordgenerator;
 
 import java.io.IOException;
-import java.util.Hashtable;
 import java.util.Set;
 
 import javafx.event.ActionEvent;
@@ -30,20 +29,16 @@ public class PasswordController extends Controller {
   @FXML
   @Override
   protected void initialize() throws IOException {
-    Hashtable<String, String> rules = new Hashtable<String, String>();
-    rules.put("type", "password");
-    rules.put("upper", "" + upper.isSelected() + "");
-    rules.put("lower", "" + lower.isSelected() + "");
-    rules.put("numberic", "" + numberic.isSelected() + "");
-    rules.put("special", "" + special.isSelected() + "");
-
-    // Set de regels
-    passwordRules.setRules(rules);
+    passwordRules.addRules("type", "password");
+    passwordRules.addRules("upper", "" + upper.isSelected() + "");
+    passwordRules.addRules("lower", "" + lower.isSelected() + "");
+    passwordRules.addRules("numberic", "" + numberic.isSelected() + "");
+    passwordRules.addRules("special", "" + special.isSelected() + "");
 
     // Set de password length
     passwordLength.setLength(minLength);
 
-    // Set de dropdown
+    // Bepaal welke item(s) de dropdown krijgt
     for (String type : passwordTypes.getTypes()) {
       if ((passwordRules.getRules().get("type").toLowerCase()).equals(type.toLowerCase())) {
         passwordBox.setValue(type);
@@ -52,6 +47,7 @@ public class PasswordController extends Controller {
       }
     }
 
+    // Set de dropdown
     passwordBox.setItems(passwordTypes.getTypes());
 
     // Set de beginwaarde van de Slider

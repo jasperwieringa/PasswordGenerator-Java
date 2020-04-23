@@ -7,7 +7,7 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
-
+import java.util.Hashtable;
 import javafx.scene.control.Label;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -25,7 +25,7 @@ public abstract class Controller {
   protected ComboBox<String> passwordBox;
 
   protected PasswordTypes passwordTypes = new PasswordTypes(FXCollections.observableArrayList("Password", "Passphrase"));
-  protected PasswordRules passwordRules = new PasswordRules();
+  protected PasswordRules passwordRules = new PasswordRules(new Hashtable<String, String>());
   protected PasswordLength passwordLength = new PasswordLength();
 
   // Genereer een wachtwoord a.h.v. de waarden vanuit de controller
