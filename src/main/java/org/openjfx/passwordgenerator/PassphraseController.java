@@ -31,20 +31,11 @@ public class PassphraseController extends Controller {
     passwordRules.addRules("capital", "" + capital.isSelected() + "");
     passwordRules.addRules("numberic", "" + numberic.isSelected() + "");
 
+    // Set de dropdown
+    passwordBox.setItems(setTypes());
+
     // Set de password length
     passwordLength.setLength(minLength);
-
-    // Bepaal welke item(s) de dropdown krijgt
-    for (String type : passwordTypes.getTypes()) {
-      if ((passwordRules.getRules().get("type").toLowerCase()).equals(type.toLowerCase())) {
-        passwordBox.setValue(type);
-        passwordTypes.removeType(type);
-        break;
-      }
-    }
-    
-    // Set de dropdown
-    passwordBox.setItems(passwordTypes.getTypes());
 
     // Set de randvoorwaarden in de Spinner
     passLength.setValueFactory(limietWaarden);
@@ -82,11 +73,11 @@ public class PassphraseController extends Controller {
     passwordRules.editRules(type.getId(), "" + type.isSelected() + "");
 
     generatePassword();
-  }
+  };
 
   @FXML
   @Override
   protected void switchTo() throws IOException {
     App.setRoot("password_generator");
-  }
+  };
 }

@@ -1,8 +1,8 @@
 package org.openjfx.passwordgenerator;
 
 import java.io.IOException;
-import java.util.Set;
 
+import java.util.Set;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
@@ -35,20 +35,11 @@ public class PasswordController extends Controller {
     passwordRules.addRules("numberic", "" + numberic.isSelected() + "");
     passwordRules.addRules("special", "" + special.isSelected() + "");
 
+    // Set de dropdown
+    passwordBox.setItems(setTypes());
+
     // Set de password length
     passwordLength.setLength(minLength);
-
-    // Bepaal welke item(s) de dropdown krijgt
-    for (String type : passwordTypes.getTypes()) {
-      if ((passwordRules.getRules().get("type").toLowerCase()).equals(type.toLowerCase())) {
-        passwordBox.setValue(type);
-        passwordTypes.removeType(type);
-        break;
-      }
-    }
-
-    // Set de dropdown
-    passwordBox.setItems(passwordTypes.getTypes());
 
     // Set de beginwaarde van de Slider
     passLength.setMin(minLength);
@@ -62,8 +53,7 @@ public class PasswordController extends Controller {
         passwordLength.setLength(newValue.intValue());
         passLengthLabel.setText("" + passwordLength.getLength() + "");
         generatePassword();
-      } 
-      catch (IOException e) {
+      } catch (IOException e) {
         System.out.println("Er ging iets mis bij het wijzigen van de lengte");
       }
     });
@@ -81,27 +71,27 @@ public class PasswordController extends Controller {
     if (!type.isSelected() && changeAllowed()) {
       type.setSelected(false);
 
-      passwordRules.editRules(type.getId(), ""+type.isSelected()+"");
+      passwordRules.editRules(type.getId(), "" + type.isSelected() + "");
       generatePassword();
-    } 
+    }
     // Als checkbox false is maar de checkbox mag niet worden gewijzigd
     else if (!type.isSelected() && !changeAllowed()) {
       type.setSelected(true);
-    } 
+    }
     // Als checkbox true is
     else {
-      passwordRules.editRules(type.getId(), ""+type.isSelected()+"");
+      passwordRules.editRules(type.getId(), "" + type.isSelected() + "");
       generatePassword();
     }
-  }
+  };
 
   @FXML
   @Override
   protected void switchTo() throws IOException {
     App.setRoot("passphrase_generator");
-  }
+  };
 
-  // Controleer of de gebruiker de checkbox uit mag zetten (minimaal 1 moet aan staan)
+  // Controleer of de checkbox uit mag (minimaal 1 moet aan staan)
   private Boolean changeAllowed() throws IOException {
     Boolean can_change = false;
 
@@ -120,7 +110,6 @@ public class PasswordController extends Controller {
         can_change = true;
       }
     }
-
     return can_change;
-  }
+  };
 }
