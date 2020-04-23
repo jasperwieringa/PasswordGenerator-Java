@@ -66,33 +66,6 @@ public class PasswordController extends Controller {
   @Override
   protected void setState(ActionEvent event) throws IOException {
     CheckBox type = (CheckBox) event.getSource();
-
-    // Als checkbox false is en de checkbox mag worden gewijzigd
-    if (!type.isSelected() && changeAllowed()) {
-      type.setSelected(false);
-
-      passwordRules.editRules(type.getId(), "" + type.isSelected() + "");
-      generatePassword();
-    }
-    // Als checkbox false is maar de checkbox mag niet worden gewijzigd
-    else if (!type.isSelected() && !changeAllowed()) {
-      type.setSelected(true);
-    }
-    // Als checkbox true is
-    else {
-      passwordRules.editRules(type.getId(), "" + type.isSelected() + "");
-      generatePassword();
-    }
-  };
-
-  @FXML
-  @Override
-  protected void switchTo() throws IOException {
-    App.setRoot("passphrase_generator");
-  };
-
-  // Controleer of de checkbox uit mag (minimaal 1 moet aan staan)
-  private Boolean changeAllowed() throws IOException {
     Boolean can_change = false;
 
     if (passwordRules.getRules().size() > 0) {
@@ -110,6 +83,28 @@ public class PasswordController extends Controller {
         can_change = true;
       }
     }
-    return can_change;
+
+    // Als checkbox false is en de checkbox mag worden gewijzigd
+    if (!type.isSelected() && can_change) {
+      type.setSelected(false);
+
+      passwordRules.editRules(type.getId(), "" + type.isSelected() + "");
+      generatePassword();
+    }
+    // Als checkbox false is maar de checkbox mag niet worden gewijzigd
+    else if (!type.isSelected() && !can_change) {
+      type.setSelected(true);
+    }
+    // Als checkbox true is
+    else {
+      passwordRules.editRules(type.getId(), "" + type.isSelected() + "");
+      generatePassword();
+    }
+  };
+
+  @FXML
+  @Override
+  protected void switchTo() throws IOException {
+    App.setRoot("passphrase_generator");
   };
 }
