@@ -58,14 +58,13 @@ public class PasswordController extends Controller {
 
     // Voeg een listener toe om de waarde van de Slider te gebruiken
     passLength.valueProperty().addListener((observable, oldValue, newValue) -> {
-      passwordLength.setLength(newValue.intValue());
-      passLengthLabel.setText("" + passwordLength.getLength() + "");
-
-      // Genereer een nieuw wachtwoord
       try {
+        passwordLength.setLength(newValue.intValue());
+        passLengthLabel.setText("" + passwordLength.getLength() + "");
         generatePassword();
-      } catch (IOException e) {
-        System.out.println(e);
+      } 
+      catch (IOException e) {
+        System.out.println("Er ging iets mis bij het wijzigen van de lengte");
       }
     });
 
@@ -102,8 +101,8 @@ public class PasswordController extends Controller {
     App.setRoot("passphrase_generator");
   }
 
-  // Controleer of de gebruiker de checkbox uit mag zetten
-  private Boolean changeAllowed() {
+  // Controleer of de gebruiker de checkbox uit mag zetten (minimaal 1 moet aan staan)
+  private Boolean changeAllowed() throws IOException {
     Boolean can_change = false;
 
     if (passwordRules.getRules().size() > 0) {
@@ -117,7 +116,6 @@ public class PasswordController extends Controller {
         }
       }
 
-      // Wanneer er op z'n minst 2 checkboxen aan staan
       if (min_selected > 1) {
         can_change = true;
       }

@@ -9,6 +9,7 @@ import java.util.Random;
 import java.util.stream.Collectors;
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.IOException;
 
 public class Password {
   private String password;
@@ -28,7 +29,7 @@ public class Password {
   private String seperator;
 
   // Wachtwoord setter
-  protected void generatePassword(int length, Hashtable<String, String> passwordRules) {
+  protected void generatePassword(int length, Hashtable<String, String> passwordRules) throws IOException {
     // Als het type wachtwoord een 'password' is
     if ((passwordRules.get("type").toLowerCase()).equals("password")) {
       String passwordLibrary = ""; // Lege String voor de beschikbare characters voor het wachtwoord
@@ -80,12 +81,12 @@ public class Password {
   };
 
   // Wachtwoord getter
-  protected String getPassword() {
+  protected String getPassword() throws IOException {
     return this.password;
   };
 
   // Genereer een wachtwoord
-  private String generatePassword(int length, String passwordString) {
+  private String generatePassword(int length, String passwordString) throws IOException {
     if (length < 1)
       throw new IllegalArgumentException();
 
@@ -102,7 +103,7 @@ public class Password {
   }
 
   // Genereer een passphrase
-  private String generatePassphrase(int length) {
+  private String generatePassphrase(int length) throws IOException {
     List<String> dictionary = new ArrayList<String>();
     Random number = new Random(System.currentTimeMillis());
     String passPhrase = "";
@@ -151,7 +152,7 @@ public class Password {
   }
 
   // Shuffle het wachtwoord
-  private String shufflePassword(String wachtwoord) {
+  private String shufflePassword(String wachtwoord) throws IOException {
     List<String> letters = Arrays.asList(wachtwoord.split(""));
     Collections.shuffle(letters);
 
@@ -159,7 +160,7 @@ public class Password {
   }
 
   // Zet de eerste letter naar UpperCase
-  private String capitalize(String str) {
+  private String capitalize(String str) throws IOException {
     if(str == null || str.isEmpty()) {
         return str;
     }

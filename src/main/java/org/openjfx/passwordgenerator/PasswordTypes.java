@@ -1,5 +1,7 @@
 package org.openjfx.passwordgenerator;
 
+import java.io.IOException;
+
 import javafx.collections.ObservableList;
 
 public class PasswordTypes {
@@ -9,11 +11,11 @@ public class PasswordTypes {
     this.passwordTypes = passwordTypes;
   }
 
-  protected ObservableList<String> getTypes() {
+  protected ObservableList<String> getTypes() throws IOException {
     return this.passwordTypes;
   }
 
-  protected void removeType(String type) {
+  protected void removeType(String type) throws IOException {
     this.passwordTypes.remove(type);
   }
 }

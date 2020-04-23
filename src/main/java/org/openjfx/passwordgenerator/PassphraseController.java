@@ -15,15 +15,13 @@ public class PassphraseController extends Controller {
   @FXML
   private Spinner<Integer> passLength = new Spinner<>(3, 20, 0, 1); // Min 3, Max 20, in stappen van 1
   @FXML
-  private SpinnerValueFactory.IntegerSpinnerValueFactory limietWaarden = (SpinnerValueFactory.IntegerSpinnerValueFactory) passLength
-      .getValueFactory();
+  private SpinnerValueFactory.IntegerSpinnerValueFactory limietWaarden = (SpinnerValueFactory.IntegerSpinnerValueFactory) passLength.getValueFactory();
   @FXML
   private TextField wordSeperator;
   @FXML
   private CheckBox capital;
   @FXML
   private CheckBox numberic;
-
 
   @FXML
   @Override
@@ -53,23 +51,23 @@ public class PassphraseController extends Controller {
 
     // Voeg een listener toe om de waarde van de Spinner te gebruiken
     passLength.valueProperty().addListener((observable, oldValue, newValue) -> {
-      passwordLength.setLength(newValue.intValue());
-
       try {
+        passwordLength.setLength(newValue.intValue());
         generatePassword();
-      } catch (IOException e) {
-        System.out.println(e);
+      } 
+      catch (IOException e) {
+        System.out.println("Er ging iets mis bij het wijzigen van de lengte");
       }
     });
 
     // Voeg een listener toe om de waarde van de seperator te gebruiken
     wordSeperator.textProperty().addListener((observable, oldValue, newValue) -> {
-      passwordRules.editRules("seperator", newValue);
-
       try {
+        passwordRules.editRules("seperator", newValue);
         generatePassword();
-      } catch (IOException e) {
-        System.out.println(e);
+      } 
+      catch (IOException e) {
+        System.out.println("Er ging iets mis bij het wijzigen van de wachtwoord regels");
       }
     });
 
