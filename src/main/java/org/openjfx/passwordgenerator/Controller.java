@@ -10,7 +10,7 @@ import javafx.scene.input.ClipboardContent;
 import java.util.Hashtable;
 import javafx.scene.control.Label;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
+import javafx.scene.control.ComboBox;;
 
 public abstract class Controller {
   private Clipboard clipboard = Clipboard.getSystemClipboard();
@@ -19,6 +19,7 @@ public abstract class Controller {
 
   @FXML
   protected Label passwordLabel;
+
   @FXML
   protected Button generateButton, copyButton;
   @FXML
