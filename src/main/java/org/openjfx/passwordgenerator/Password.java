@@ -27,12 +27,7 @@ public class Password {
   private Boolean capitalize;
   private String seperator;
 
-  // Password
-  protected Password(String password) {
-    this.password = password;
-  };
-
-  // Genereer een wachtwoord
+  // Wachtwoord setter
   protected void generatePassword(int length, Hashtable<String, String> passwordRules) {
     // Als het type wachtwoord een 'password' is
     if ((passwordRules.get("type").toLowerCase()).equals("password")) {
@@ -84,7 +79,7 @@ public class Password {
     }
   };
 
-  // Return wachtwoord (voor de copyPassword function)
+  // Wachtwoord getter
   protected String getPassword() {
     return this.password;
   };

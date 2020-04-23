@@ -15,7 +15,7 @@ import javafx.scene.control.ComboBox;
 public abstract class Controller {
   private Clipboard clipboard = Clipboard.getSystemClipboard();
   private ClipboardContent content = new ClipboardContent();
-  private Password password = new Password("");
+  private Password password = new Password();
 
   @FXML
   protected Label passwordLabel;
