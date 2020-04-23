@@ -5,6 +5,10 @@ import java.io.IOException;
 public class PasswordLength {
   private int passwordLength;
 
+  protected PasswordLength(int length) {
+    this.passwordLength = length;
+  }
+
   protected void setLength(int length) throws IOException {
     this.passwordLength = length;
   }

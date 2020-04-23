@@ -39,8 +39,8 @@ public class PasswordController extends Controller {
     passwordBox.setItems(setTypes());
 
     // Set de password length
-    passwordLength.setLength(minLength);
-
+    PasswordLength passwordLength = new PasswordLength(minLength);
+    
     // Set de beginwaarde van de Slider
     passLength.setMin(minLength);
     passLength.setMax(maxLength);
@@ -66,6 +66,33 @@ public class PasswordController extends Controller {
   @Override
   protected void setState(ActionEvent event) throws IOException {
     CheckBox type = (CheckBox) event.getSource();
+    Boolean canChange = canChange();
+
+    // Als checkbox false is en de checkbox mag worden gewijzigd
+    if (!type.isSelected() && canChange) {
+      type.setSelected(false);
+
+      passwordRules.editRules(type.getId(), "" + type.isSelected() + "");
+      generatePassword();
+    }
+    // Als checkbox false is maar de checkbox mag niet worden gewijzigd
+    else if (!type.isSelected() && !canChange) {
+      type.setSelected(true);
+    }
+    // Als checkbox true is
+    else {
+      passwordRules.editRules(type.getId(), "" + type.isSelected() + "");
+      generatePassword();
+    }
+  };
+
+  @FXML
+  @Override
+  protected void switchTo() throws IOException {
+    App.setRoot("passphrase_generator");
+  };
+
+  private Boolean canChange() throws IOException {
     Boolean can_change = false;
 
     if (passwordRules.getRules().size() > 0) {
@@ -84,27 +111,6 @@ public class PasswordController extends Controller {
       }
     }
 
-    // Als checkbox false is en de checkbox mag worden gewijzigd
-    if (!type.isSelected() && can_change) {
-      type.setSelected(false);
-
-      passwordRules.editRules(type.getId(), "" + type.isSelected() + "");
-      generatePassword();
-    }
-    // Als checkbox false is maar de checkbox mag niet worden gewijzigd
-    else if (!type.isSelected() && !can_change) {
-      type.setSelected(true);
-    }
-    // Als checkbox true is
-    else {
-      passwordRules.editRules(type.getId(), "" + type.isSelected() + "");
-      generatePassword();
-    }
-  };
-
-  @FXML
-  @Override
-  protected void switchTo() throws IOException {
-    App.setRoot("passphrase_generator");
-  };
+    return can_change;
+  }
 }

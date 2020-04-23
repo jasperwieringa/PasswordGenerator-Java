@@ -35,7 +35,7 @@ public class PassphraseController extends Controller {
     passwordBox.setItems(setTypes());
 
     // Set de password length
-    passwordLength.setLength(minLength);
+    PasswordLength passwordLength = new PasswordLength(minLength);
 
     // Set de randvoorwaarden in de Spinner
     passLength.setValueFactory(limietWaarden);

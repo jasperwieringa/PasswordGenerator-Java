@@ -30,53 +30,66 @@ public class Password {
 
   // Wachtwoord setter
   protected void generatePassword(int length, Hashtable<String, String> passwordRules) throws IOException {
-    // Als het type wachtwoord een 'password' is
-    if ((passwordRules.get("type").toLowerCase()).equals("password")) {
-      String passwordLibrary = ""; // Lege String voor de beschikbare characters voor het wachtwoord
-      String requiredString = ""; // Lege String voor de vereiste characters voor het wachtwoord
+    // Controleer of de regels goed zijn doorgekomen
+    if (passwordRules.size() > 0) {
+      // Als het type wachtwoord een 'password' is
+      if ((passwordRules.get("type").toLowerCase()).equals("password")) {
+        String passwordLibrary = ""; // Lege String voor de beschikbare characters voor het wachtwoord
+        String requiredString = ""; // Lege String voor de vereiste characters voor het wachtwoord
 
-      // Check alle wachtwoord regels
-      this.lower = (passwordRules.get("lower")).equals("true");
-      this.upper = (passwordRules.get("upper")).equals("true");
-      this.numberic = (passwordRules.get("numberic")).equals("true");
-      this.special = (passwordRules.get("special")).equals("true");
+        // Check alle wachtwoord regels
+        this.lower = (passwordRules.get("lower")).equals("true");
+        this.upper = (passwordRules.get("upper")).equals("true");
+        this.numberic = (passwordRules.get("numberic")).equals("true");
+        this.special = (passwordRules.get("special")).equals("true");
 
-      // Als kleine letter vereist is
-      if (this.lower) {
-        requiredString += generatePassword(1, lowerString);
-        passwordLibrary += lowerString;
+        // Als kleine letter vereist is
+        if (this.lower) {
+          requiredString += generatePassword(1, lowerString);
+          passwordLibrary += lowerString;
+        }
+        // Als hoofdletter vereist is
+        if (this.upper) {
+          requiredString += generatePassword(1, upperString);
+          passwordLibrary += upperString;
+        }
+        // Als een nummer vereist is
+        if (this.numberic) {
+          requiredString += generatePassword(1, numberString);
+          passwordLibrary += numberString;
+        }
+        // Als een speciaal teken vereist is
+        if (this.special) {
+          requiredString += generatePassword(1, specialString);
+          passwordLibrary += specialString;
+        }
+
+        if (requiredString.length() < length) {
+          if (requiredString.length() > 0) {
+            // Genereer een wachtwoord van x aantal karakters - de lengte van de requiredString
+            String generatedPassword = generatePassword(length - requiredString.length(), passwordLibrary);
+
+            // Shuffle het wachtwoord om logica te vermijden
+            this.password = shufflePassword(generatedPassword + requiredString);
+          } else {
+            throw new IllegalArgumentException("You need to have at least one checkbox selected");
+          }
+        } else {
+          throw new IllegalArgumentException(
+              "Your password needs to be at least " + requiredString.length() + " characters long");
+        }
       }
-      // Als hoofdletter vereist is
-      if (this.upper) {
-        requiredString += generatePassword(1, upperString);
-        passwordLibrary += upperString;
+
+      else {
+        // Check alle wachtwoord regels
+        this.capitalize = (passwordRules.get("capital")).equals("true");
+        this.numberic = (passwordRules.get("numberic")).equals("true");
+        this.seperator = (passwordRules.get("seperator").equals("")) ? " " : passwordRules.get("seperator");
+
+        this.password = generatePassphrase(length);
       }
-      // Als een nummer vereist is
-      if (this.numberic) {
-        requiredString += generatePassword(1, numberString);
-        passwordLibrary += numberString;
-      }
-      // Als een speciaal teken vereist is
-      if (this.special) {
-        requiredString += generatePassword(1, specialString);
-        passwordLibrary += specialString;
-      }
-
-      // Genereer een wachtwoord van x aantal karakters - de lengte van de
-      // requiredString die wordt opgebouwd uit de passwordRules
-      String generatedPassword = generatePassword(length - requiredString.length(), passwordLibrary);
-
-      // Shuffle het wachtwoord om logica te vermijden
-      this.password = shufflePassword(generatedPassword + requiredString);
-    }
-
-    else {
-      // Check alle wachtwoord regels
-      this.capitalize = (passwordRules.get("capital")).equals("true");
-      this.numberic = (passwordRules.get("numberic")).equals("true");
-      this.seperator = (passwordRules.get("seperator").equals("")) ? " " : passwordRules.get("seperator");
-
-      this.password = generatePassphrase(length);
+    } else {
+      throw new IllegalArgumentException("There are no passwordrules included");
     }
   };
 
@@ -87,9 +100,6 @@ public class Password {
 
   // Genereer een wachtwoord
   private String generatePassword(int length, String passwordString) throws IOException {
-    if (length < 1)
-      throw new IllegalArgumentException();
-
     StringBuilder stringBuilder = new StringBuilder(length);
     for (int i = 0; i < length; i++) {
 
@@ -143,7 +153,7 @@ public class Password {
       }
 
       // Zolang het niet het laatste woord is, kan een seperator worden toegevoegd
-      if (i != length) { 
+      if (i != length) {
         passPhrase += this.seperator;
       }
     }
@@ -161,8 +171,8 @@ public class Password {
 
   // Zet de eerste letter naar UpperCase
   private String capitalize(String str) throws IOException {
-    if(str == null || str.isEmpty()) {
-        return str;
+    if (str == null || str.isEmpty()) {
+      return str;
     }
 
     return str.substring(0, 1).toUpperCase() + str.substring(1);
