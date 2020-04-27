@@ -124,7 +124,7 @@ public class Password {
         // Check alle passphrase regels
         this.capitalize = passwordRules.get(ruleValues.get(0)) != null ? passwordRules.get(ruleValues.get(0)).equals("true") : false;
         this.numberic = passwordRules.get(ruleValues.get(1)) != null ? passwordRules.get(ruleValues.get(1)).equals("true") : false;
-        this.seperator = passwordRules.get(ruleValues.get(3)).equals("") ? " " : passwordRules.get(ruleValues.get(3));
+        this.seperator = passwordRules.get(ruleValues.get(2)).equals("") ? " " : passwordRules.get(ruleValues.get(2));
       }
       return true;
     } else {

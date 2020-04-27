@@ -7,7 +7,7 @@ package org.openjfx.passwordgenerator;
  */
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.Assertions;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.IOException;
 
@@ -22,6 +22,6 @@ public class PasswordLengthTest {
     PasswordLength testLength = new PasswordLength(0);
     testLength.setLength(1);
 
-    Assertions.assertNotNull(testLength.getLength());
+    assertNotNull(testLength.getLength());
   };
 }

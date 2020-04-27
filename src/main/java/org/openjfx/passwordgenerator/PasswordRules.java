@@ -22,7 +22,11 @@ public class PasswordRules {
     type = type.toLowerCase();
     value = value.toLowerCase();
 
-    this.passwordRules.replace(type, value);
+    if (this.passwordRules.containsKey(type)) {
+      this.passwordRules.replace(type, value);
+    } else {
+      throw new IllegalArgumentException("De regel van het type " + type + " bestaat niet in de tabel");
+    }
   }
 
   protected Hashtable<String, String> getRules() throws IOException {

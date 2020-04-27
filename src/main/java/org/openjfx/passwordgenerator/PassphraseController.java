@@ -20,7 +20,7 @@ public class PassphraseController extends Controller {
   @FXML
   private TextField wordSeperator;
   @FXML
-  private CheckBox capital;
+  private CheckBox capitalize;
   @FXML
   private CheckBox numberic;
 
@@ -29,7 +29,7 @@ public class PassphraseController extends Controller {
   protected void initialize() throws IOException {
     passwordRules.addRules("type", "passphrase");
     passwordRules.addRules("seperator", wordSeperator.getText());
-    passwordRules.addRules("capitalize", "" + capital.isSelected());
+    passwordRules.addRules("capitalize", "" + capitalize.isSelected());
     passwordRules.addRules("numberic", "" + numberic.isSelected());
     passwordRules.addRules("minLength", "" + minLength);
     passwordRules.addRules("maxLength", "" + maxLength);
