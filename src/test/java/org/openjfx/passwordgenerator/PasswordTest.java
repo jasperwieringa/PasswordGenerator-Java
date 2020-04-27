@@ -97,9 +97,9 @@ public class PasswordTest {
     testRules.addRules("minLength", "" + minLength);
     testRules.addRules("maxLength", "" + maxLength);
 
-
+    Throwable exception = assertThrows(IllegalArgumentException.class,
         () -> testPassword.generatePassword(testLength.getLength(), testRules.getRules()));
-  
+
     assertEquals("Je wachtwoord mag maximaal " + maxLength + " karakters lang zijn", exception.getMessage());
   };
 
