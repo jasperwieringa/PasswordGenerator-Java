@@ -176,7 +176,7 @@ public class PasswordTest {
   };
 
   @Test // Foutieve minLength
-  public void testPassphrase_wo_length_w_rules() throws IOException {
+  public void testPassphrase_wo_length_w_rules_0() throws IOException {
     Password testPassphrase = new Password();
     PasswordLength testLength = new PasswordLength(0);
     PasswordRules testRules = new PasswordRules(new Hashtable<String, String>());
@@ -194,5 +194,26 @@ public class PasswordTest {
         () -> testPassphrase.generatePassword(testLength.getLength(), testRules.getRules()));
 
     assertEquals("Je wachtwoord moet ten minste " + minLength + " karakters lang zijn", exception.getMessage());
+  };
+
+  @Test // Foutieve maxLength
+  public void testPassphrase_wo_length_w_rules_1() throws IOException {
+    Password testPassphrase = new Password();
+    PasswordLength testLength = new PasswordLength(22);
+    PasswordRules testRules = new PasswordRules(new Hashtable<String, String>());
+    int minLength = 3;
+    int maxLength = 20;
+
+    testRules.addRules("type", "passphrase");
+    testRules.addRules("seperator", "true");
+    testRules.addRules("capital", "true");
+    testRules.addRules("numberic", "true");
+    testRules.addRules("minLength", "" + minLength);
+    testRules.addRules("maxLength", "" + maxLength);
+
+    Throwable exception = assertThrows(IllegalArgumentException.class,
+        () -> testPassphrase.generatePassword(testLength.getLength(), testRules.getRules()));
+
+    assertEquals("Je wachtwoord mag maximaal " + maxLength + " karakters lang zijn", exception.getMessage());
   };
 }

@@ -33,13 +33,6 @@ public class ControllerTest {
   };
 
   @Test // Pass
-  public void passwordType() throws IOException {
-    PasswordType passwordController = new PasswordType("NewType");
-
-    assertTrue(!passwordController.getType().isEmpty());
-  }
-
-  @Test // Pass
   public void generatePassword() throws IOException {
     Password password = new Password();
 
