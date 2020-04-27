@@ -1,21 +1,14 @@
-package org.openjfx.passwordgenerator;
+// Naam: Jasper Wieringa
+// Leerlijn: Object Georienteerd programmeren
+// Datum: 27-04-2020
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+package org.openjfx.passwordgenerator;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.IOException;
 
-/**
- *
- * @author Jasper.Wieringa
- */
- 
 public class PasswordLengthTest {
   @Test // pass
   public void testPasswordLength() throws IOException {

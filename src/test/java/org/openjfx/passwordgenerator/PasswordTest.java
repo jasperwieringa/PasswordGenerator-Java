@@ -1,21 +1,13 @@
-package org.openjfx.passwordgenerator;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+// Datum: 27-04-2020
+
+package org.openjfx.passwordgenerator;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.IOException;
 import java.util.Hashtable;
-
-/**
- *
- * @author Jasper.Wieringa
- */
 
 public class PasswordTest {
   @Test // Geen type
@@ -105,7 +97,7 @@ public class PasswordTest {
     testRules.addRules("minLength", "" + minLength);
     testRules.addRules("maxLength", "" + maxLength);
 
-    Throwable exception = assertThrows(IllegalArgumentException.class,
+
         () -> testPassword.generatePassword(testLength.getLength(), testRules.getRules()));
   
     assertEquals("Je wachtwoord mag maximaal " + maxLength + " karakters lang zijn", exception.getMessage());

@@ -1,10 +1,8 @@
-package org.openjfx.passwordgenerator;
+// Naam: Jasper Wieringa
+// Leerlijn: Object Georienteerd programmeren
+// Datum: 27-04-2020
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+package org.openjfx.passwordgenerator;
 
 import org.junit.jupiter.api.Test;
 
@@ -14,11 +12,6 @@ import java.io.IOException;
 
 import java.util.Hashtable;
 
-/**
- *
- * @author Jasper.Wieringa
- */
- 
 public class PasswordRulesTest {
   @Test // pass
   public void testPasswordRules_add() throws IOException {
@@ -74,7 +67,7 @@ public class PasswordRulesTest {
     passwordRules.editRules("type", "passphrase");
 
     Throwable exception = assertThrows(IllegalArgumentException.class,
-    () -> passwordRules.editRules(falseRule, "true"));
+        () -> passwordRules.editRules(falseRule, "true"));
 
     assertEquals("De regel van het type " + falseRule + " bestaat niet in de tabel", exception.getMessage());
   };

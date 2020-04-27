@@ -1,10 +1,8 @@
-package org.openjfx.passwordgenerator;
+// Naam: Jasper Wieringa
+// Leerlijn: Object Georienteerd programmeren
+// Datum: 27-04-2020
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+package org.openjfx.passwordgenerator;
 
 import org.junit.jupiter.api.Test;
 
@@ -18,11 +16,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import java.util.Hashtable;
 import java.util.Iterator;
-
-/**
- *
- * @author Jasper.Wieringa
- */
 
 public class ControllerTest {
   @Test // Pass
@@ -71,7 +64,7 @@ public class ControllerTest {
     password.generatePassword(passwordLength.getLength(), passwordRules.getRules());
 
     content.putString(password.getPassword());
-    
+
     assertTrue(!content.isEmpty());
   };
 
@@ -95,7 +88,7 @@ public class ControllerTest {
     passwordRules.addRules("type", passRandomController.getType());
 
     Iterator<PasswordType> i = passwordTypes.iterator();
-  
+
     while (i.hasNext()) {
       PasswordType currentType = i.next();
       String currentController = passwordRules.getRules().get("type");

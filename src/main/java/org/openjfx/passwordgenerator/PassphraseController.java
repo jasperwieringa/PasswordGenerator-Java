@@ -1,3 +1,7 @@
+// Naam: Jasper Wieringa
+// Leerlijn: Object Georienteerd programmeren
+// Datum: 27-04-2020
+
 package org.openjfx.passwordgenerator;
 
 import java.io.IOException;
@@ -16,7 +20,8 @@ public class PassphraseController extends Controller {
   @FXML
   private Spinner<Integer> passLength = new Spinner<>(minLength, maxLength, 0, 1); // Min 3, Max 20, in stappen van 1
   @FXML
-  private SpinnerValueFactory.IntegerSpinnerValueFactory limietWaarden = (SpinnerValueFactory.IntegerSpinnerValueFactory) passLength.getValueFactory();
+  private SpinnerValueFactory.IntegerSpinnerValueFactory limietWaarden = (SpinnerValueFactory.IntegerSpinnerValueFactory) passLength
+      .getValueFactory();
   @FXML
   private TextField wordSeperator;
   @FXML
@@ -48,8 +53,7 @@ public class PassphraseController extends Controller {
       try {
         passwordLength.setLength(newValue.intValue());
         generatePassword();
-      } 
-      catch (IOException e) {
+      } catch (IOException e) {
         System.out.println("Er ging iets mis bij het wijzigen van de lengte");
       }
     });
@@ -59,8 +63,7 @@ public class PassphraseController extends Controller {
       try {
         passwordRules.editRules("seperator", newValue);
         generatePassword();
-      } 
-      catch (IOException e) {
+      } catch (IOException e) {
         System.out.println("Er ging iets mis bij het wijzigen van de wachtwoord regels");
       }
     });
