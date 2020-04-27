@@ -19,7 +19,6 @@ public abstract class Controller {
   private Clipboard clipboard = Clipboard.getSystemClipboard();
   private ClipboardContent content = new ClipboardContent();
   private Password password = new Password();
-  private PasswordLength passwordLength = new PasswordLength(0);
   private PasswordType passwordController = new PasswordType("Password");
   private PasswordType passphraseController = new PasswordType("Passphrase");
   private ObservableList<PasswordType> passwordTypes = FXCollections.observableArrayList();
@@ -27,6 +26,7 @@ public abstract class Controller {
   
   // protected vanwege de generate_password & copy_password buttons die in beide controllers gelijk zijn
   protected PasswordRules passwordRules = new PasswordRules(new Hashtable<String, String>());
+  protected PasswordLength passwordLength = new PasswordLength(0);
 
   @FXML
   protected Label passwordLabel;

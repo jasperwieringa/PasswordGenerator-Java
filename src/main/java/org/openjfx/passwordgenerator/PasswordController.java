@@ -41,7 +41,7 @@ public class PasswordController extends Controller {
     passwordBox.setItems(setTypes());
 
     // Set de password length
-    PasswordLength passwordLength = new PasswordLength(minLength);
+    passwordLength.setLength(minLength);
     
     // Set de beginwaarde van de Slider
     passLength.setMin(minLength);

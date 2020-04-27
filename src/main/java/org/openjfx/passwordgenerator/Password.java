@@ -111,16 +111,20 @@ public class Password {
       }
 
       if (this.passwordType.toLowerCase().equals("password")) {
+        ArrayList<String> ruleValues = new ArrayList<String>(Arrays.asList("lower", "upper", "numberic", "special"));
+
         // Check alle password regels
-        this.lower = passwordRules.get("lower") != null ? passwordRules.get("lower").equals("true") : false;
-        this.upper = passwordRules.get("upper") != null ? passwordRules.get("upper").equals("true") : false;
-        this.numberic = passwordRules.get("numberic") != null ? passwordRules.get("upper").equals("numberic") : false;
-        this.special = passwordRules.get("special") != null ? passwordRules.get("upper").equals("special") : false;
+        this.lower = passwordRules.get(ruleValues.get(0)) != null ? passwordRules.get(ruleValues.get(0)).equals("true") : false;
+        this.upper = passwordRules.get(ruleValues.get(1)) != null ? passwordRules.get(ruleValues.get(1)).equals("true") : false;
+        this.numberic = passwordRules.get(ruleValues.get(2)) != null ? passwordRules.get(ruleValues.get(2)).equals("true") : false;
+        this.special = passwordRules.get(ruleValues.get(3)) != null ? passwordRules.get(ruleValues.get(3)).equals("true") : false;
       } else {
+        ArrayList<String> ruleValues = new ArrayList<String>(Arrays.asList("capitalize", "numberic", "seperator"));
+
         // Check alle passphrase regels
-        this.capitalize = passwordRules.get("capitalize") != null ? passwordRules.get("capitalize").equals("special") : false;
-        this.numberic = passwordRules.get("numberic") != null ? passwordRules.get("numberic").equals("special") : false;
-        this.seperator = passwordRules.get("seperator").equals("") ? " " : passwordRules.get("seperator");
+        this.capitalize = passwordRules.get(ruleValues.get(0)) != null ? passwordRules.get(ruleValues.get(0)).equals("true") : false;
+        this.numberic = passwordRules.get(ruleValues.get(1)) != null ? passwordRules.get(ruleValues.get(1)).equals("true") : false;
+        this.seperator = passwordRules.get(ruleValues.get(3)).equals("") ? " " : passwordRules.get(ruleValues.get(3));
       }
       return true;
     } else {
