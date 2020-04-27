@@ -28,12 +28,14 @@ public class Password {
   private Boolean special;
   private Boolean capitalize;
   private String seperator;
+  private int minLength;
+  private int maxLength;
 
   // Wachtwoord setter
   protected void generatePassword(int length, Hashtable<String, String> passwordRules) throws IOException {
-    
+
     // Valideer de regels
-    if (validateRules(passwordRules)) {
+    if (validateRules(length, passwordRules)) {
 
       // Als het type wachtwoord een 'password' is
       if (this.passwordType.equals("password")) {
@@ -61,28 +63,20 @@ public class Password {
           passwordLibrary += specialString;
         }
 
-        if (requiredString.length() < length) {
-          if (requiredString.length() > 0) {
-            // Genereer een wachtwoord van x aantal karakters - de lengte van de requiredString
-            String generatedPassword = generatePassword(length - requiredString.length(), passwordLibrary);
+        if (requiredString.length() > 0) {
+          // Genereer een wachtwoord van x aantal karakters - de lengte van de
+          // requiredString
+          String generatedPassword = generatePassword(length - requiredString.length(), passwordLibrary);
 
-            // Shuffle het wachtwoord om logica te vermijden
-            this.password = shufflePassword(generatedPassword + requiredString);
-          } else {
-            throw new IllegalArgumentException("Er moet tenminste één checkbox zijn geselecteerd");
-          }
+          // Shuffle het wachtwoord om logica te vermijden
+          this.password = shufflePassword(generatedPassword + requiredString);
         } else {
-          throw new IllegalArgumentException(
-              "Je wachtwoord moet ten minste " + requiredString.length() + " karakters lang zijn");
+          throw new IllegalArgumentException("Er moet tenminste één checkbox zijn geselecteerd");
         }
-      }
-      else {
-        if (length > 0) {
-          this.password = generatePassphrase(length);
-        } else {
-          throw new IllegalArgumentException(
-              "Je wachtwoord moet ten minste 1 karakter lang zijn");
-        }
+      } else if (this.passwordType.equals("passphrase")) {
+        this.password = generatePassphrase(length);
+      } else {
+        throw new IllegalArgumentException("Wachtwoordtype wordt niet ondersteund");
       }
     } else {
       throw new IllegalArgumentException("Wachtwoordtype ontbreekt in de passwordRules");
@@ -95,18 +89,34 @@ public class Password {
   };
 
   // Valideer de wachtwoord regels
-  private Boolean validateRules(Hashtable<String, String> passwordRules) {
+  private Boolean validateRules(int length, Hashtable<String, String> passwordRules) {
     this.passwordType = passwordRules.get("type");
 
     if (this.passwordType != null) {
+
+      // Valideer de minLength & maxLength hier om duplicate code te vermijden
+      if (passwordRules.get("minlength") != null && passwordRules.get("maxlength") != null) {
+        this.minLength = Integer.parseInt(passwordRules.get("minlength"));
+        this.maxLength = Integer.parseInt(passwordRules.get("maxlength"));
+      } else {
+        throw new IllegalArgumentException("Je hebt geen min en/of max lengte meegegeven in de rules");
+      }
+
+      if (length < minLength) {
+        throw new IllegalArgumentException("Je wachtwoord moet ten minste " + minLength + " karakters lang zijn");
+      }
+
+      if (length > maxLength) {
+        throw new IllegalArgumentException("Je wachtwoord mag maximaal " + maxLength + " karakters lang zijn");
+      }
+
       if (this.passwordType.toLowerCase().equals("password")) {
         // Check alle password regels
         this.lower = passwordRules.get("lower") != null ? passwordRules.get("lower").equals("true") : false;
         this.upper = passwordRules.get("upper") != null ? passwordRules.get("upper").equals("true") : false;
         this.numberic = passwordRules.get("numberic") != null ? passwordRules.get("upper").equals("numberic") : false;
         this.special = passwordRules.get("special") != null ? passwordRules.get("upper").equals("special") : false;
-      } 
-      else {
+      } else {
         // Check alle passphrase regels
         this.capitalize = passwordRules.get("capitalize") != null ? passwordRules.get("capitalize").equals("special") : false;
         this.numberic = passwordRules.get("numberic") != null ? passwordRules.get("numberic").equals("special") : false;

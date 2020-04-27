@@ -11,9 +11,10 @@ import javafx.scene.control.CheckBox;
 
 public class PassphraseController extends Controller {
   private int minLength = 3;
+  private int maxLength = 20;
 
   @FXML
-  private Spinner<Integer> passLength = new Spinner<>(3, 20, 0, 1); // Min 3, Max 20, in stappen van 1
+  private Spinner<Integer> passLength = new Spinner<>(minLength, maxLength, 0, 1); // Min 3, Max 20, in stappen van 1
   @FXML
   private SpinnerValueFactory.IntegerSpinnerValueFactory limietWaarden = (SpinnerValueFactory.IntegerSpinnerValueFactory) passLength.getValueFactory();
   @FXML
@@ -28,8 +29,10 @@ public class PassphraseController extends Controller {
   protected void initialize() throws IOException {
     passwordRules.addRules("type", "passphrase");
     passwordRules.addRules("seperator", wordSeperator.getText());
-    passwordRules.addRules("capitalize", "" + capital.isSelected() + "");
-    passwordRules.addRules("numberic", "" + numberic.isSelected() + "");
+    passwordRules.addRules("capitalize", "" + capital.isSelected());
+    passwordRules.addRules("numberic", "" + numberic.isSelected());
+    passwordRules.addRules("minLength", "" + minLength);
+    passwordRules.addRules("maxLength", "" + maxLength);
 
     // Set de dropdown
     passwordBox.setItems(setTypes());

@@ -30,10 +30,12 @@ public class PasswordController extends Controller {
   @Override
   protected void initialize() throws IOException {
     passwordRules.addRules("type", "password");
-    passwordRules.addRules("upper", "" + upper.isSelected() + "");
-    passwordRules.addRules("lower", "" + lower.isSelected() + "");
-    passwordRules.addRules("numberic", "" + numberic.isSelected() + "");
-    passwordRules.addRules("special", "" + special.isSelected() + "");
+    passwordRules.addRules("upper", "" + upper.isSelected());
+    passwordRules.addRules("lower", "" + lower.isSelected());
+    passwordRules.addRules("numberic", "" + numberic.isSelected());
+    passwordRules.addRules("special", "" + special.isSelected());
+    passwordRules.addRules("minLength", "" + minLength);
+    passwordRules.addRules("maxLength", "" + maxLength);
 
     // Set de dropdown
     passwordBox.setItems(setTypes());

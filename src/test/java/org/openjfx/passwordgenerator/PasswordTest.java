@@ -7,7 +7,6 @@ package org.openjfx.passwordgenerator;
  */
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.Assertions;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.IOException;
@@ -17,20 +16,10 @@ import java.util.Hashtable;
  *
  * @author Jasper.Wieringa
  */
- 
+
 public class PasswordTest {
-  @Test // IllegalArgumentException vanwege ontbrekende testRules
-  public void testPassword_wo_length_wo_rules() throws IOException {
-    Password testPassword = new Password();
-    PasswordLength testLength = new PasswordLength(0);
-    PasswordRules testRules = new PasswordRules(new Hashtable<String, String>());
-
-    Assertions.assertThrows(IllegalArgumentException.class,
-        () -> testPassword.generatePassword(testLength.getLength(), testRules.getRules()));
-  };
-
-  @Test // IllegalArgumentException vanwege de PasswordLength
-  public void testPassword_wo_length_w_rules() throws IOException {
+  @Test // Geen minLength & maxLength
+  public void testPassword_wo_length_w_rules_0() throws IOException {
     Password testPassword = new Password();
     PasswordLength testLength = new PasswordLength(0);
     PasswordRules testRules = new PasswordRules(new Hashtable<String, String>());
@@ -41,24 +30,95 @@ public class PasswordTest {
     testRules.addRules("numberic", "true");
     testRules.addRules("special", "true");
 
-    Assertions.assertThrows(IllegalArgumentException.class,
+    Throwable exception = assertThrows(IllegalArgumentException.class,
         () -> testPassword.generatePassword(testLength.getLength(), testRules.getRules()));
+
+    assertEquals("Je hebt geen min en/of max lengte meegegeven in de rules", exception.getMessage());
   };
 
-  @Test // IllegalArgumentException vanwege alle checkboxes als false
+  @Test // Geen maxLength
+  public void testPassword_wo_length_w_rules_1() throws IOException {
+    Password testPassword = new Password();
+    PasswordLength testLength = new PasswordLength(0);
+    PasswordRules testRules = new PasswordRules(new Hashtable<String, String>());
+
+    testRules.addRules("type", "password");
+    testRules.addRules("upper", "true");
+    testRules.addRules("lower", "true");
+    testRules.addRules("numberic", "true");
+    testRules.addRules("special", "true");
+    testRules.addRules("minLength", "3");
+
+    Throwable exception = assertThrows(IllegalArgumentException.class,
+        () -> testPassword.generatePassword(testLength.getLength(), testRules.getRules()));
+
+    assertEquals("Je hebt geen min en/of max lengte meegegeven in de rules", exception.getMessage());
+  };
+
+  @Test // Foutieve minLength
+  public void testPassword_wo_length_w_rules_2() throws IOException {
+    Password testPassword = new Password();
+    PasswordLength testLength = new PasswordLength(0);
+    PasswordRules testRules = new PasswordRules(new Hashtable<String, String>());
+    int minLength = 3;
+    int maxLength = 128;
+
+    testRules.addRules("type", "password");
+    testRules.addRules("upper", "true");
+    testRules.addRules("lower", "true");
+    testRules.addRules("numberic", "true");
+    testRules.addRules("special", "true");
+    testRules.addRules("minLength", "" + minLength);
+    testRules.addRules("maxLength", "" + maxLength);
+
+    Throwable exception = assertThrows(IllegalArgumentException.class,
+        () -> testPassword.generatePassword(testLength.getLength(), testRules.getRules()));
+
+    assertEquals("Je wachtwoord moet ten minste " + minLength + " karakters lang zijn", exception.getMessage());
+  };
+
+  @Test // Foutieve maxLength
+  public void testPassword_wo_length_w_rules_3() throws IOException {
+    Password testPassword = new Password();
+    PasswordLength testLength = new PasswordLength(130);
+    PasswordRules testRules = new PasswordRules(new Hashtable<String, String>());
+    int minLength = 3;
+    int maxLength = 128;
+
+    testRules.addRules("type", "password");
+    testRules.addRules("upper", "true");
+    testRules.addRules("lower", "true");
+    testRules.addRules("numberic", "true");
+    testRules.addRules("special", "true");
+    testRules.addRules("minLength", "" + minLength);
+    testRules.addRules("maxLength", "" + maxLength);
+
+    Throwable exception = assertThrows(IllegalArgumentException.class,
+        () -> testPassword.generatePassword(testLength.getLength(), testRules.getRules()));
+  
+    assertEquals("Je wachtwoord mag maximaal " + maxLength + " karakters lang zijn", exception.getMessage());
+  };
+
+  @Test // Alle checkboxes false
   public void testPassword_w_length_w_rules_false() throws IOException {
     Password testPassword = new Password();
     PasswordLength testLength = new PasswordLength(5);
     PasswordRules testRules = new PasswordRules(new Hashtable<String, String>());
+    int minLength = 3;
+    int maxLength = 128;
 
     testRules.addRules("type", "PaSSwoRD");
     testRules.addRules("upper", "false");
     testRules.addRules("lower", "false");
     testRules.addRules("numberic", "false");
     testRules.addRules("special", "false");
+    testRules.addRules("minLength", "" + minLength);
+    testRules.addRules("maxLength", "" + maxLength);
 
-    Assertions.assertThrows(IllegalArgumentException.class,
+    Throwable exception = assertThrows(IllegalArgumentException.class,
         () -> testPassword.generatePassword(testLength.getLength(), testRules.getRules()));
+
+    assertEquals("Er moet tenminste één checkbox zijn geselecteerd", exception.getMessage());
   };
 
   @Test // Pass
@@ -66,12 +126,16 @@ public class PasswordTest {
     Password testPassword = new Password();
     PasswordLength testLength = new PasswordLength(5);
     PasswordRules testRules = new PasswordRules(new Hashtable<String, String>());
+    int minLength = 3;
+    int maxLength = 128;
 
     testRules.addRules("type", "PaSSwoRD");
     testRules.addRules("upper", "true");
     testRules.addRules("lower", "true");
     testRules.addRules("numberic", "true");
     testRules.addRules("special", "true");
+    testRules.addRules("minLength", "" + minLength);
+    testRules.addRules("maxLength", "" + maxLength);
 
     testPassword.generatePassword(testLength.getLength(), testRules.getRules());
 
@@ -83,15 +147,20 @@ public class PasswordTest {
     Password testPassword = new Password();
     PasswordLength testLength = new PasswordLength(5);
     PasswordRules testRules = new PasswordRules(new Hashtable<String, String>());
+    int minLength = 3;
+    int maxLength = 128;
 
-    testRules.addRules("type", "PaSSwoRD");
+    testRules.addRules("type", "PAsSwORD");
     testRules.addRules("upper", "false");
     testRules.addRules("lower", "true");
     testRules.addRules("numberic", "false");
     testRules.addRules("special", "false");
+    testRules.addRules("minLength", "" + minLength);
+    testRules.addRules("maxLength", "" + maxLength);
 
     testPassword.generatePassword(testLength.getLength(), testRules.getRules());
 
     assertTrue(!testPassword.getPassword().isEmpty());
   };
+
 }
