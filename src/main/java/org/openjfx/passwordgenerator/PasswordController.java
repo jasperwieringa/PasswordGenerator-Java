@@ -2,7 +2,6 @@ package org.openjfx.passwordgenerator;
 
 import java.io.IOException;
 
-import java.util.Set;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
@@ -93,26 +92,4 @@ public class PasswordController extends Controller {
   protected void switchTo() throws IOException {
     App.setRoot("passphrase_generator");
   };
-
-  private Boolean canChange() throws IOException {
-    Boolean can_change = false;
-
-    if (passwordRules.getRules().size() > 0) {
-      Set<String> rules = passwordRules.getRules().keySet();
-
-      int min_selected = 0;
-
-      for (String rule : rules) {
-        if (passwordRules.getRules().get(rule).equals("true")) {
-          min_selected += 1;
-        }
-      }
-
-      if (min_selected > 1) {
-        can_change = true;
-      }
-    }
-
-    return can_change;
-  }
 }

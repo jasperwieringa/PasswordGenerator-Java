@@ -2,6 +2,7 @@ package org.openjfx.passwordgenerator;
 
 import java.io.IOException;
 
+import java.util.Set;
 import javafx.fxml.FXML;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -29,9 +30,9 @@ public abstract class Controller {
   protected PasswordLength passwordLength = new PasswordLength(0);
 
   @FXML
-  protected Label passwordLabel;
+  private Label passwordLabel;
   @FXML
-  protected Button generateButton, copyButton;
+  private Button generateButton, copyButton;
   @FXML
   protected ComboBox<String> passwordBox;
 
@@ -71,6 +72,29 @@ public abstract class Controller {
 
     return dropdownTypes;
   };
+
+  // Valideer of een checkbox uitgezet mag worden
+  protected Boolean canChange() throws IOException {
+    Boolean can_change = false;
+
+    if (passwordRules.getRules().size() > 0) {
+      Set<String> rules = passwordRules.getRules().keySet();
+
+      int min_selected = 0;
+
+      for (String rule : rules) {
+        if (passwordRules.getRules().get(rule).equals("true")) {
+          min_selected += 1;
+        }
+      }
+
+      if (min_selected > 1) {
+        can_change = true;
+      }
+    }
+
+    return can_change;
+  }
 
   // Abstracte methoden
   protected abstract void initialize() throws IOException; // Initializer voor elke controller
