@@ -6,10 +6,6 @@ package org.openjfx.passwordgenerator;
  * and open the template in the editor.
  */
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
 import static org.junit.jupiter.api.Assertions.*;
@@ -21,28 +17,9 @@ import java.util.Hashtable;
  *
  * @author Jasper.Wieringa
  */
-public class ControllerTest {
-
-  public ControllerTest() {
-  };
-
-  @BeforeAll
-  public static void setUpClass() {
-  };
-
-  @AfterAll
-  public static void tearDownClass() {
-  };
-
-  @BeforeEach
-  public void setUp() {
-  };
-
-  @AfterEach
-  public void tearDown() {
-  };
-
-  @Test // IllegalArgumentException vanwege de testRules
+ 
+public class PasswordTest {
+  @Test // IllegalArgumentException vanwege ontbrekende testRules
   public void testPassword_wo_length_wo_rules() throws IOException {
     Password testPassword = new Password();
     PasswordLength testLength = new PasswordLength(0);
@@ -52,7 +29,7 @@ public class ControllerTest {
         () -> testPassword.generatePassword(testLength.getLength(), testRules.getRules()));
   };
 
-  @Test // IllegalArgumentException vanwege de testLength
+  @Test // IllegalArgumentException vanwege de PasswordLength
   public void testPassword_wo_length_w_rules() throws IOException {
     Password testPassword = new Password();
     PasswordLength testLength = new PasswordLength(0);

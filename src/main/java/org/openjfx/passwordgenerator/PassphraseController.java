@@ -28,7 +28,7 @@ public class PassphraseController extends Controller {
   protected void initialize() throws IOException {
     passwordRules.addRules("type", "passphrase");
     passwordRules.addRules("seperator", wordSeperator.getText());
-    passwordRules.addRules("capital", "" + capital.isSelected() + "");
+    passwordRules.addRules("capitalize", "" + capital.isSelected() + "");
     passwordRules.addRules("numberic", "" + numberic.isSelected() + "");
 
     // Set de dropdown
